@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.unitri.testador.RelPedidoClienteFX">
+	<top>
+		<TabPane fx:id="tabTela" prefHeight="600.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER" xmlns:fx="http://javafx.com/fxml">
+			<tabs>
+				<Tab fx:id="tabRelatorio" text="Relatorio">
+					<content>
+						<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="529.0" prefWidth="600.0">
+							<children>
+								<Button fx:id="btnBuscar" layoutX="499.0" layoutY="38.0" mnemonicParsing="false" onAction="#btnBuscarClick" prefHeight="25.0" prefWidth="89.0" text="Buscar" />
+								<TableView fx:id="tbPedidos" layoutX="6.0" layoutY="118.0" prefHeight="362.0" prefWidth="589.0" xmlns:fx="http://javafx.com/fxml" />
+								<Button fx:id="btnLimpar" layoutX="499.0" layoutY="82.0" mnemonicParsing="false" onAction="#btnLimparClick" prefHeight="25.0" prefWidth="89.0" text="Limpar" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />
+								<RadioButton fx:id="rbPDF" layoutX="115.0" layoutY="524.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="124.0" text="Gerar PDF" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+									<toggleGroup>
+										<ToggleGroup fx:id="gerarPor" />
+									</toggleGroup>
+								</RadioButton>
+								<RadioButton fx:id="rbVisualizar" layoutX="325.0" layoutY="524.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="115.0" text="Visualizar" toggleGroup="$gerarPor" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />
+								<RadioButton fx:id="rbHtml" layoutX="219.0" layoutY="524.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="93.0" text="Gerar HTML" toggleGroup="$gerarPor" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />
+								<RadioButton fx:id="rbXls" layoutX="14.0" layoutY="524.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="92.0" text="Gerar XLS" toggleGroup="$gerarPor" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />
+								<Button fx:id="btnGerarRelatorio" layoutX="453.0" layoutY="498.0" mnemonicParsing="false" onAction="#btnGerarRelatorioClick" prefHeight="25.0" prefWidth="119.0" text="Gerar Relatorio" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />
+								<GridPane layoutX="14.0" layoutY="5.0" prefHeight="102.0" prefWidth="477.0" xmlns:fx="http://javafx.com/fxml">
+									<columnConstraints>
+										<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+										<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+									</columnConstraints>
+									<rowConstraints>
+										<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+									</rowConstraints>
+									<children>
+										<Pane prefHeight="200.0" prefWidth="200.0">
+											<children>
+												<Label layoutX="7.0048828125" layoutY="5.5" text="Nome do Cliente" />
+												<TextField fx:id="txtNome" layoutX="5.0" layoutY="29.0" prefHeight="25.0" prefWidth="230.0" />
+											</children>
+										</Pane>
+										<Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+											<children>
+												<Label layoutX="7.0048828125" layoutY="5.5" text="Profissão:" />
+												<TextField fx:id="txtProfissao" layoutX="7.0" layoutY="28.0" prefHeight="25.0" prefWidth="227.0" />
+											</children>
+										</Pane>
+										<Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+											<children>
+												<Label layoutX="8.0048828125" layoutY="5.5" text="Cidade:" />
+												<TextField fx:id="txtCidade" layoutX="8.0" layoutY="29.0" prefHeight="25.0" prefWidth="216.0" />
+											</children>
+										</Pane>
+										<Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+											<children>
+												<Label layoutX="8.0048828125" layoutY="5.5" text="Telefone" />
+												<TextField fx:id="txtTelefone" layoutX="8.0" layoutY="28.0" prefHeight="25.0" prefWidth="218.0" />
+											</children>
+										</Pane>
+									</children>
+								</GridPane><RadioButton fx:id="rbRelatorioDet" layoutX="14.0439453125" layoutY="489.5" mnemonicParsing="false" text="Relatório Detalhado">
+<toggleGroup>
+<ToggleGroup fx:id="tipoRelatorio" />
+</toggleGroup></RadioButton><RadioButton fx:id="rbRelatorioSint" layoutX="159.5439453125" layoutY="489.5" mnemonicParsing="false" text="Relatório Sintetico" toggleGroup="$tipoRelatorio" />
+							</children>
+						</AnchorPane>
+					</content>
+				</Tab>
+			</tabs>
+		</TabPane>
+	</top>
+</BorderPane>

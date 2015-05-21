@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.unitri.testador.PrincipalControler">
+	<top>
+		<MenuBar BorderPane.alignment="CENTER" xmlns:fx="http://javafx.com/fxml">
+			<menus>
+				<Menu mnemonicParsing="false" text="Arquivo">
+					<items>
+						<MenuItem fx:id="menuItemFechar" mnemonicParsing="false" onAction="#menuItemFecharClick" text="Fechar" />
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="false" text="Cadastros">
+					<items>
+						<MenuItem fx:id="menuItemCategoria"    mnemonicParsing="false" onAction="#menuItemCategorialick"  text="Categorias" />
+						<MenuItem fx:id="menuItemProduto"      mnemonicParsing="false" onAction="#menuItemProdutoClick" text="Produto"/>
+						<MenuItem fx:id="menuItemCliente"      mnemonicParsing="false" onAction="#menuItemClienteClick" text="Cliente"/>
+						<MenuItem fx:id="menuItemPedido"       mnemonicParsing="false" onAction="#menuItemPedidoClick" text="Pedido"/>
+						<MenuItem fx:id="menuItemItensPedido"  mnemonicParsing="false" onAction="#menuItemItensPedidoClick" text="Itens do Pedido"/>
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="false" text="Consultas">
+					<items>
+						<MenuItem fx:id="menuItemConsCategoria"    mnemonicParsing="false" onAction="#menuItemConsCategorialick"  text="Categorias" />
+						<MenuItem fx:id="menuItemConsProduto"      mnemonicParsing="false" onAction="#menuItemConsProdutoClick" text="Produto"/>
+						<MenuItem fx:id="menuItemConsCliente"      mnemonicParsing="false" onAction="#menuItemConsClienteClick" text="Cliente"/>
+						<MenuItem fx:id="menuItemConsPedido"       mnemonicParsing="false" onAction="#menuItemConsPedidoClick" text="Pedido"/>
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="false" text="Relatórios">
+					<items>
+						<MenuItem fx:id="menuItemCategoriaRel"       mnemonicParsing="false" onAction="#menuItemCategoriaRelClick" text="Categorias" />
+						<MenuItem fx:id="menuItemProdutoRel"         mnemonicParsing="false" onAction="#menuItemProdutoRelClick" text="Produto"/>
+						<MenuItem fx:id="menuItemClienteRel"         mnemonicParsing="false" onAction="#menuItemClienteRelClick" text="Cliente"/>
+						<MenuItem fx:id="menuItemPedidoRel"          mnemonicParsing="false" onAction="#menuItemPedidosRelClick" text="Pedidos"/>
+						<MenuItem fx:id="menuItemClientePedidoRel"   mnemonicParsing="false" onAction="#menuItemPedidosClienteRelClick" text="Pedidos / Cliente"/>
+						<MenuItem fx:id="menuItemProdutoQtd"         mnemonicParsing="false" onAction="#menuItemProdutoQtdClick" text="Produtos/Quantidade/Mês"/>
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="false" text="Ajuda">
+					<items>
+						<MenuItem fx:id="menuItemAbout" mnemonicParsing="false" onAction="#menuItemAboutClick" text="About" />
+					</items>
+				</Menu>
+			</menus>
+		</MenuBar>
+	</top>
+</BorderPane>

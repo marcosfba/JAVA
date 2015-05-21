@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.unitri.testador.PrincipalControler">
+	<top>
+		<MenuBar BorderPane.alignment="CENTER" xmlns:fx="http://javafx.com/fxml">
+			<menus>
+				<Menu mnemonicParsing="false" text="Arquivo">
+					<items>
+						<MenuItem fx:id="menuItemFechar" mnemonicParsing="false" onAction="#menuItemFecharClick" text="Fechar" />
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="false" text="Operações">
+					<items>
+						<MenuItem fx:id="menuItemCategoria"      mnemonicParsing="false" onAction="#menuItemCategorialick"  text="Categorias" />
+						<MenuItem fx:id="menuItemProduto"      mnemonicParsing="false" onAction="#menuItemProdutoClick" text="Produto"/>
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="false" text="Relatórios">
+					<items>
+						<MenuItem fx:id="menuItemCategoriaRel"  mnemonicParsing="false" onAction="#menuItemCategoriaRelClick" text="Categorias" />
+						<MenuItem fx:id="menuItemProdutoRel"  mnemonicParsing="false" onAction="#menuItemProdutoRelClick" text="Produto"/>
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="false" text="Ajuda">
+					<items>
+						<MenuItem fx:id="menuItemAbout" mnemonicParsing="false" onAction="#menuItemAboutClick" text="About" />
+					</items>
+				</Menu>
+			</menus>
+		</MenuBar>
+	</top>
+</BorderPane>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="400.0" prefWidth="600.0"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="br.edu.unitri.testador.ConsCategoriaFX">
+	<top>
+		<TabPane fx:id="tabTela" prefHeight="404.0" prefWidth="500.0"
+			tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER"
+			xmlns:fx="http://javafx.com/fxml">
+			<tabs>
+				<Tab fx:id="tabConsulta" text="Consulta">
+					<content>
+						<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0"
+							prefWidth="200.0">
+							<children>
+								<TextField fx:id="txtBuscar" layoutX="145.0" layoutY="37.0"
+									prefHeight="25.0" prefWidth="243.0" />
+								<Button fx:id="btnBuscar" layoutX="395.0" layoutY="37.0"
+									mnemonicParsing="false" onAction="#btnBuscarClick" prefHeight="25.0"
+									prefWidth="89.0" text="Buscar" />
+								<TableView fx:id="tbCategorias" layoutX="6.0" layoutY="69.0"
+									prefHeight="296.0" prefWidth="589.0" xmlns:fx="http://javafx.com/fxml" />
+								<RadioButton fx:id="rbNome" layoutX="14.0" layoutY="14.0"
+									mnemonicParsing="false" prefHeight="17.0" prefWidth="134.0"
+									text="Por Nome Categoria">
+									<toggleGroup>
+										<ToggleGroup fx:id="buscarPor" />
+									</toggleGroup>
+								</RadioButton>
+								<RadioButton fx:id="rbDescricao" layoutX="14.0"
+									layoutY="41.0" mnemonicParsing="false" prefHeight="17.0"
+									prefWidth="105.0" text="Por Descrição" toggleGroup="$buscarPor"
+									xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />
+								<Button fx:id="btnLimpar" layoutX="497.0" layoutY="37.0"
+									mnemonicParsing="false" onAction="#btnLimparClick" prefHeight="25.0"
+									prefWidth="89.0" text="Limpar" xmlns="http://javafx.com/javafx/8"
+									xmlns:fx="http://javafx.com/fxml/1" />
+							</children>
+						</AnchorPane>
+					</content>
+				</Tab>
+			</tabs>
+		</TabPane>
+	</top>
+</BorderPane>

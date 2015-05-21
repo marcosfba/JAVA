@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.3.final using JasperReports Library version 6.0.3  -->
+<!-- 2015-04-29T08:35:08 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relProdutos" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b5b44645-a820-47fb-acf4-dce316023e64">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="codCliente" class="java.lang.Long"/>
+	<field name="nomeCliente" class="java.lang.String"/>
+	<field name="qtdPedidos" class="java.lang.Integer"/>
+	<field name="ano" class="java.lang.Integer"/>
+	<field name="vlrTotal" class="java.math.BigDecimal"/>
+	<variable name="SomaItens" class="java.lang.Integer" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{qtdPedidos}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="ValorAnual" class="java.math.BigDecimal" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{vlrTotal}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<group name="Group1">
+		<groupExpression><![CDATA[$F{ano}]]></groupExpression>
+		<groupHeader>
+			<band height="44">
+				<staticText>
+					<reportElement x="0" y="24" width="100" height="20" uuid="0781bec8-a5c9-4af1-9697-e5c87adfd8ab"/>
+					<text><![CDATA[Cód.Cliente]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="100" y="24" width="144" height="20" uuid="5f47e60f-064f-42eb-8cb4-c188d251fb76"/>
+					<text><![CDATA[Nome/Razão Social Cliente]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="250" y="24" width="100" height="20" uuid="3c7ec639-b6bf-4548-b089-1b8e0c8e7c6d"/>
+					<text><![CDATA[Qtd.Itens]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="360" y="24" width="80" height="20" uuid="35a2e21f-5afa-496b-a814-904ca522f8f4"/>
+					<text><![CDATA[Valor]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="0" width="120" height="20" uuid="f6054c77-e905-4dc0-8cc6-03461dac21c5"/>
+					<text><![CDATA[Pedidos referente ao ano:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="120" y="0" width="80" height="20" uuid="37318bde-9c21-439a-973e-b0e60fb4e27f"/>
+					<textFieldExpression><![CDATA[$F{ano}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement x="-1" y="22" width="561" height="1" uuid="66e15450-3d63-45a4-becf-3bbacb8a375b"/>
+				</rectangle>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<staticText>
+					<reportElement x="180" y="0" width="60" height="20" uuid="8a069e81-a12d-43ea-b1e4-b74b56f31efa"/>
+					<text><![CDATA[Totais:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="250" y="0" width="90" height="20" uuid="7393bced-71bb-449e-8bac-af4b66858bc4"/>
+					<textFieldExpression><![CDATA[$V{SomaItens}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="360" y="0" width="80" height="20" uuid="d3f66dcf-439d-46bb-a330-02d0418f512f"/>
+					<textFieldExpression><![CDATA[$V{ValorAnual}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="1" width="560" height="19" uuid="932f6c19-ba3a-4c13-9097-615878404146">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório Sintético de Pedidos por Cliente]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="90" height="22" uuid="21db03ed-dabb-4a3e-bfec-9ee6238b358b"/>
+				<textFieldExpression><![CDATA[$F{codCliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="144" height="22" uuid="d0402102-970e-46e1-8743-b2f78a7b0969"/>
+				<textFieldExpression><![CDATA[$F{nomeCliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="0" width="100" height="22" uuid="e65cd7ab-3544-47a0-afbc-bb1bec7ee5da"/>
+				<textFieldExpression><![CDATA[$F{qtdPedidos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="360" y="0" width="80" height="22" uuid="a0c592d9-4e12-4812-907a-de0c34eb414f"/>
+				<textFieldExpression><![CDATA[$F{vlrTotal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="267" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<stackedBarChart>
+				<chart evaluationTime="Report">
+					<reportElement x="70" y="20" width="400" height="200" uuid="25c28cab-570e-486f-ab5f-2609d991b44c"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<dataset resetType="Group" resetGroup="Group1"/>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{ano}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{vlrTotal}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{qtdPedidos}]]></valueExpression>
+						<labelExpression><![CDATA[$F{nomeCliente}]]></labelExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</barPlot>
+			</stackedBarChart>
+		</band>
+	</summary>
+</jasperReport>
