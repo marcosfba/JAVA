@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.unitri.testador.DevolucaoFX">
+<top><TabPane fx:id="tabTela" prefHeight="404.0" prefWidth="500.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER" xmlns:fx="http://javafx.com/fxml">
+  <tabs>
+<Tab fx:id="tabConsulta" text="Consulta">
+  <content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+<children>
+<TextField fx:id="txtBuscar" layoutX="149.0" layoutY="33.0" prefHeight="25.0" prefWidth="250.0" /><Button fx:id="btnBuscar" layoutX="417.0" layoutY="33.0" mnemonicParsing="false" onAction="#btnBuscarClick" prefHeight="25.0" prefWidth="89.0" text="Buscar" /><TableView fx:id="tbLocacoes" layoutX="6.0" layoutY="92.0" prefHeight="273.0" prefWidth="589.0" xmlns:fx="http://javafx.com/fxml" /><RadioButton fx:id="rbVeículo" layoutX="23.0" layoutY="14.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="105.0" text="Por Veículo">
+<toggleGroup>
+<ToggleGroup fx:id="buscarPor" />
+</toggleGroup></RadioButton>
+<RadioButton fx:id="rbCliente" layoutX="23.0" layoutY="37.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="105.0" text="Por Cliente" toggleGroup="$buscarPor" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />
+<RadioButton fx:id="rbLocacao" layoutX="23.0" layoutY="62.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="105.0" text="Por Locação" toggleGroup="$buscarPor" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />
+</children></AnchorPane>
+  </content>
+</Tab>
+<Tab fx:id="tabCadastro" text="Cadastro">
+<content><Pane prefHeight="200.0" prefWidth="200.0">
+<children><GridPane layoutX="93.0" layoutY="57.0" prefHeight="171.0" prefWidth="474.0" xmlns:fx="http://javafx.com/fxml">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="185.0" minWidth="10.0" prefWidth="162.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="355.0" minWidth="10.0" prefWidth="327.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />
+<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />
+  </rowConstraints>
+<children><Label text="Cliente">
+</Label><Label text="Veículo" GridPane.rowIndex="1">
+</Label><Label text="Funcionário" GridPane.rowIndex="2">
+</Label><Label text="Qtd.Dias" GridPane.rowIndex="3" /><Label text="Kilometragem" GridPane.rowIndex="4" /><Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+<children><ComboBox fx:id="cbFuncionario" layoutY="2.0" prefHeight="25.0" prefWidth="197.0" xmlns:fx="http://javafx.com/fxml" /><Button fx:id="btnFuncionario" layoutX="207.0" layoutY="2.0" mnemonicParsing="false" onAction="#btnFuncionarioClick" prefHeight="33.0" prefWidth="113.0" text="Novo Funcionario" />
+</children></Pane><TextField fx:id="txtDias" GridPane.columnIndex="1" GridPane.rowIndex="3" /><TextField fx:id="txtKilometragem" GridPane.columnIndex="1" GridPane.rowIndex="4" /><TextField fx:id="txtCliente" disable="true" editable="false" GridPane.columnIndex="1" /><TextField fx:id="txtVeiculo" disable="true" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+</children>
+</GridPane><Button fx:id="btnIncluir" layoutX="240.0" layoutY="282.0" mnemonicParsing="false" onAction="#btnIncluirClick" prefHeight="25.0" prefWidth="90.0" text="Salvar" />
+</children></Pane>
+</content></Tab>
+  </tabs>
+</TabPane>
+</top></BorderPane>

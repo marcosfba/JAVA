@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="320.0" prefWidth="600.0"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="br.edu.unitri.testador.ConsultaRFX">
+	<top>
+		<TabPane fx:id="tabTela" prefHeight="320.0" prefWidth="600.0"
+			tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER"
+			xmlns:fx="http://javafx.com/fxml">
+			<tabs>
+				<Tab fx:id="tabConsulta" text="Consulta">
+					<content>
+						<Pane prefHeight="200.0" prefWidth="200.0">
+							<children>
+								<TextField fx:id="txtBuscar" layoutX="165.0" layoutY="10.0"
+									prefHeight="25.0" prefWidth="294.0" />
+								<Button fx:id="btnBuscar" layoutX="466.0" layoutY="10.0"
+									mnemonicParsing="false" onAction="#btnBuscarClick" prefHeight="25.0"
+									prefWidth="105.0" text="Buscar" />
+								<TableView fx:id="tbDados" layoutX="3.0" layoutY="41.0"
+									prefHeight="254.0" prefWidth="594.0" xmlns:fx="http://javafx.com/fxml" />
+								<RadioButton fx:id="rbNomeEmp" layoutX="14.0"
+									layoutY="14.0" mnemonicParsing="false" text="Nome empregado"
+									toggleGroup="$buscarPor" />
+							</children>
+						</Pane>
+					</content>
+				</Tab>
+			</tabs>
+		</TabPane>
+	</top>
+</BorderPane>

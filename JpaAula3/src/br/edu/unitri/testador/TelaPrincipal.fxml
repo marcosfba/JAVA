@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.unitri.testador.PrincipalControler">
+	<top>
+		<MenuBar BorderPane.alignment="CENTER" xmlns:fx="http://javafx.com/fxml">
+			<menus>
+				<Menu mnemonicParsing="false" text="Arquivo">
+					<items>
+						<MenuItem fx:id="menuItemFechar" mnemonicParsing="false" onAction="#menuItemFecharClick" text="Fechar" />
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="false" text="Operações">
+					<items>
+						<MenuItem fx:id="menuItemAutores" mnemonicParsing="false" onAction="#menuItemAutoresClick" text="Autores" />
+						<MenuItem fx:id="menuItemLivros" mnemonicParsing="false" onAction="#menuItemLivrosClick" text="Livros" />
+						<MenuItem fx:id="menuItemDepartamento" mnemonicParsing="false" onAction="#menuItemDepartamentoClick" text="Departamento" />
+						<MenuItem fx:id="menuItemFuncionario" mnemonicParsing="false" onAction="#menuItemFuncionarioClick" text="Funcionário" />
+						<MenuItem fx:id="menuItemPessoa" mnemonicParsing="false" onAction="#menuItemPessoaClick" text="Pessoa" />
+						<MenuItem fx:id="menuItemEstado" mnemonicParsing="false" onAction="#menuItemEstadoClick" text="Estado" />
+						<MenuItem fx:id="menuItemGovernador" mnemonicParsing="false" onAction="#menuItemGovernadorClick" text="Governador" />
+						<MenuItem fx:id="menuItemAutorLivro" mnemonicParsing="false" onAction="#menuItemAutorLivroClick" text="Autores/Livros" />
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="false" text="Ajuda">
+					<items>
+						<MenuItem fx:id="menuItemAbout" mnemonicParsing="false" onAction="#menuItemAboutClick" text="About" />
+					</items>
+				</Menu>
+			</menus>
+		</MenuBar>
+	</top>
+</BorderPane>

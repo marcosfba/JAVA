@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.unitri.testador.PrincipalControler">
+	<top>
+		<MenuBar BorderPane.alignment="CENTER" xmlns:fx="http://javafx.com/fxml">
+			<menus>
+				<Menu mnemonicParsing="false" text="Arquivo">
+					<items>
+						<MenuItem fx:id="menuItemFechar" mnemonicParsing="false" onAction="#menuItemFecharClick" text="Fechar" />
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="false" text="Cadastros">
+					<items>
+						<MenuItem fx:id="menuItemLocal"          mnemonicParsing="false" onAction="#menuItemLocalClick"         text="Local" />
+						<MenuItem fx:id="menuItemDepartamento"   mnemonicParsing="false" onAction="#menuItemDepartamentoClick"  text="Departamento"/>
+						<MenuItem fx:id="menuIemProjeto"         mnemonicParsing="false" onAction="#menuItemProjetoClick"       text="Projeto" />
+						<MenuItem fx:id="menuIemEmpregado"       mnemonicParsing="false" onAction="#menuItemEmpregadoClick"     text="Empregado" />
+						<MenuItem fx:id="menuIemDependentes"     mnemonicParsing="false" onAction="#menuItemDependentesClick"   text="Dependentes" />
+						<MenuItem fx:id="menuIemGerente"         mnemonicParsing="false" onAction="#menuItemGerenteClick"       text="Gerente" />
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="false" text="Relações">
+					<items>
+						<MenuItem fx:id="menuItemLocalDepartamento"    mnemonicParsing="false" onAction="#menuItemLocalDepartamentoClick"     text="Local / Departamentos" />
+						<MenuItem fx:id="menuItemProjetoEmpregado"     mnemonicParsing="false" onAction="#menuItemProjetoEmpregadoClick"      text="Projeto / Empregados"/>
+						<MenuItem fx:id="menuIemGerenteEmpregado"      mnemonicParsing="false" onAction="#menuIemGerenteEmpregadoClick"       text="Gerente / Empregados" />
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="false" text="Consultas">
+					<items>
+						<MenuItem fx:id="menuItemConsultaA"   mnemonicParsing="false" onAction="#menuItemConsultaAClick"    text="Consultas Letra - A" />
+						<MenuItem fx:id="menuItemConsultaB"   mnemonicParsing="false" onAction="#menuItemConsultaBClick"    text="Consultas Letra - B"/>
+						<MenuItem fx:id="menuItemConsultaC"   mnemonicParsing="false" onAction="#menuItemConsultaCClick"    text="Consultas Letra - C" />
+						<MenuItem fx:id="menuItemConsultaD"   mnemonicParsing="false" onAction="#menuItemConsultaDClick"    text="Consultas Letra - D" />
+						<MenuItem fx:id="menuItemConsultaE"   mnemonicParsing="false" onAction="#menuItemConsultaEClick"    text="Consultas Letra - E" />
+						<MenuItem fx:id="menuItemConsultaF"   mnemonicParsing="false" onAction="#menuItemConsultaFClick"    text="Consultas Letra - F" />
+						<MenuItem fx:id="menuItemConsultaG"   mnemonicParsing="false" onAction="#menuItemConsultaGClick"    text="Consultas Letra - G" />
+						<MenuItem fx:id="menuItemConsultaH"   mnemonicParsing="false" onAction="#menuItemConsultaHClick"    text="Consultas Letra - H" />
+						<MenuItem fx:id="menuItemConsultaI"   mnemonicParsing="false" onAction="#menuItemConsultaIClick"    text="Consultas Letra - I" />
+						<MenuItem fx:id="menuItemConsultaJ"   mnemonicParsing="false" onAction="#menuItemConsultaJClick"    text="Consultas Letra - J" />
+						<MenuItem fx:id="menuItemConsultaK"   mnemonicParsing="false" onAction="#menuItemConsultaKClick"    text="Consultas Letra - K" />
+						<MenuItem fx:id="menuItemConsultaL"   mnemonicParsing="false" onAction="#menuItemConsultaLClick"    text="Consultas Letra - L" />
+						<MenuItem fx:id="menuItemConsultaM"   mnemonicParsing="false" onAction="#menuItemConsultaMClick"    text="Consultas Letra - M" />
+						<MenuItem fx:id="menuItemConsultaN"   mnemonicParsing="false" onAction="#menuItemConsultaNClick"    text="Consultas Letra - N" />
+						<MenuItem fx:id="menuItemConsultaO"   mnemonicParsing="false" onAction="#menuItemConsultaOClick"    text="Consultas Letra - O" />
+						<MenuItem fx:id="menuItemConsultaP"   mnemonicParsing="false" onAction="#menuItemConsultaPClick"    text="Consultas Letra - P" />
+						<MenuItem fx:id="menuItemConsultaQ"   mnemonicParsing="false" onAction="#menuItemConsultaQClick"    text="Consultas Letra - Q" />
+						<MenuItem fx:id="menuItemConsultaR"   mnemonicParsing="false" onAction="#menuItemConsultaRClick"    text="Consultas Letra - R" />
+						<MenuItem fx:id="menuItemConsultaS"   mnemonicParsing="false" onAction="#menuItemConsultaSClick"    text="Consultas Letra - S" />
+						<MenuItem fx:id="menuItemConsultaT"   mnemonicParsing="false" onAction="#menuItemConsultaTClick"    text="Consultas Letra - T" />
+						<MenuItem fx:id="menuItemConsultaU"   mnemonicParsing="false" onAction="#menuItemConsultaUClick"    text="Consultas Letra - U" />
+						<MenuItem fx:id="menuItemConsultaV"   mnemonicParsing="false" onAction="#menuItemConsultaVClick"    text="Consultas Letra - V" />
+						<MenuItem fx:id="menuItemConsultaX"   mnemonicParsing="false" onAction="#menuItemConsultaXClick"    text="Consultas Letra - X" />
+						<MenuItem fx:id="menuItemConsultaY"   mnemonicParsing="false" onAction="#menuItemConsultaYClick"    text="Consultas Letra - Y" />
+						<MenuItem fx:id="menuItemConsultaZ"   mnemonicParsing="false" onAction="#menuItemConsultaZClick"    text="Consultas Letra - Z" />
+						
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="false" text="Ajuda">
+					<items>
+						<MenuItem fx:id="menuItemAbout" mnemonicParsing="false" onAction="#menuItemAboutClick" text="About" />
+					</items>
+				</Menu>
+			</menus>
+		</MenuBar>
+	</top>
+</BorderPane>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.unitri.testador.LivrosAutoresFX">
+<top><TabPane fx:id="tabTela" prefHeight="404.0" prefWidth="500.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER" xmlns:fx="http://javafx.com/fxml">
+  <tabs>
+  <Tab fx:id="tabConsulta" text="Consulta">
+  <content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+<children>
+<TextField fx:id="txtBuscar" layoutX="235.0" layoutY="25.0" prefHeight="25.0" prefWidth="250.0" /><Button fx:id="btnBuscar" layoutX="497.0" layoutY="25.0" mnemonicParsing="false" onAction="#btnBuscarClick" prefHeight="25.0" prefWidth="89.0" text="Buscar" /><TableView fx:id="tbListaAutorLIvros" layoutX="6.0" layoutY="59.0" prefHeight="306.0" prefWidth="589.0" xmlns:fx="http://javafx.com/fxml" /><RadioButton fx:id="rbAutor" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="105.0" text="Por Autor">
+<toggleGroup>
+<ToggleGroup fx:id="buscarPor" />
+</toggleGroup></RadioButton>
+<RadioButton fx:id="rbLivro" layoutX="14.0" layoutY="37.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="105.0" text="Por Livro" toggleGroup="$buscarPor" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />
+</children></AnchorPane>
+  </content>
+</Tab><Tab fx:id="tabCadastro" text="Cadastro">
+<content><Pane prefHeight="200.0" prefWidth="200.0">
+<children><GridPane layoutX="39.0" layoutY="65.0" prefHeight="117.0" prefWidth="495.0" xmlns:fx="http://javafx.com/fxml">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="185.0" minWidth="10.0" prefWidth="115.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="293.0" minWidth="10.0" prefWidth="240.0" />
+<ColumnConstraints hgrow="SOMETIMES" maxWidth="293.0" minWidth="10.0" prefWidth="103.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+<children><Label text="Nome Autor">
+</Label><Label text="Nome Livro" GridPane.rowIndex="1">
+</Label><ComboBox fx:id="cbAutor" onAction="#cbAutorOnChange" prefHeight="25.0" prefWidth="274.0" GridPane.columnIndex="1" xmlns:fx="http://javafx.com/fxml" /><ComboBox fx:id="cbLivro" prefHeight="25.0" prefWidth="278.0" GridPane.columnIndex="1" GridPane.rowIndex="1" xmlns:fx="http://javafx.com/fxml" /><Button fx:id="btnAutor" mnemonicParsing="false" onAction="#btnAutorClick" prefHeight="25.0" prefWidth="84.0" text="Novo Autor" GridPane.columnIndex="2" /><Button fx:id="btnLivro" mnemonicParsing="false" onAction="#btnLivroClick" prefHeight="25.0" prefWidth="85.0" text="Novo Livro" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+</children>
+</GridPane><Button fx:id="btnIncluir" layoutX="319.0" layoutY="231.0" mnemonicParsing="false" onAction="#btnIncluirClick" prefHeight="25.0" prefWidth="90.0" text="Salvar" />
+<Button fx:id="btnNovo" layoutX="210.0" layoutY="231.0" mnemonicParsing="false" onAction="#btnNovoClick" prefHeight="25.0" prefWidth="90.0" text="Novo" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />
+</children></Pane>
+</content></Tab>
+  </tabs>
+</TabPane>
+</top></BorderPane>

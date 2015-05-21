@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="600.0" prefWidth="600.0"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="br.edu.unitri.testador.ConsultaBFX">
+	<top>
+		<TabPane fx:id="tabTela" prefHeight="601.0" prefWidth="600.0"
+			tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER"
+			xmlns:fx="http://javafx.com/fxml">
+			<tabs>
+				<Tab fx:id="tabConsulta" text="Consulta">
+					<content>
+						<Pane prefHeight="200.0" prefWidth="200.0">
+							<children>
+								<RadioButton fx:id="rbCodEmpregado" layoutX="14.0439453125"
+									layoutY="14.0" mnemonicParsing="false" text="Cód.Empregado">
+									<toggleGroup>
+										<ToggleGroup fx:id="BuscarPor" />
+									</toggleGroup>
+								</RadioButton>
+								<RadioButton fx:id="rbNomeEmpregado" layoutX="14.0"
+									layoutY="41.0" mnemonicParsing="false" text="Nome Empregado"
+									toggleGroup="$BuscarPor" />
+								<RadioButton fx:id="rbDepartamento" layoutX="14.0439453125"
+									layoutY="66.5" mnemonicParsing="false" text="Por Departamento"
+									toggleGroup="$BuscarPor" />
+								<TextField fx:id="txtBuscar" layoutX="159.0" layoutY="29.0"
+									prefHeight="25.0" prefWidth="294.0" />
+								<Button fx:id="btnBuscar" layoutX="466.0" layoutY="29.0"
+									mnemonicParsing="false" onAction="#btnBuscarClick" prefHeight="25.0"
+									prefWidth="105.0" text="Buscar" />
+								<TableView fx:id="tbEmpregados" layoutX="6.0" layoutY="94.0"
+									prefHeight="165.0" prefWidth="594.0" xmlns:fx="http://javafx.com/fxml" />
+								<TableView fx:id="tbDependentes" layoutX="3.0"
+									layoutY="259.0" prefHeight="146.0" prefWidth="594.0"
+									xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />
+								<TableView fx:id="tbProjetos" layoutX="3.0" layoutY="405.0"
+									prefHeight="162.0" prefWidth="594.0" xmlns="http://javafx.com/javafx/8"
+									xmlns:fx="http://javafx.com/fxml/1" />
+							</children>
+						</Pane>
+					</content>
+				</Tab>
+			</tabs>
+		</TabPane>
+	</top>
+</BorderPane>

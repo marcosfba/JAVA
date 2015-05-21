@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.unitri.testador.PessoaContatoFX">
+<top><TabPane fx:id="tabTela" prefHeight="404.0" prefWidth="500.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER" xmlns:fx="http://javafx.com/fxml">
+  <tabs>
+<Tab fx:id="tabConsulta" text="Consulta">
+  <content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+<children>
+<TextField fx:id="txtBuscar" layoutX="237.0" layoutY="25.0" prefHeight="25.0" prefWidth="250.0" /><Button fx:id="btnBuscar" layoutX="497.0" layoutY="25.0" mnemonicParsing="false" onAction="#btnBuscarClick" prefHeight="25.0" prefWidth="89.0" text="Buscar" /><TableView fx:id="tbPessoas" layoutX="6.0" layoutY="59.0" prefHeight="306.0" prefWidth="589.0" xmlns:fx="http://javafx.com/fxml" /><RadioButton fx:id="rbNome" layoutX="23.0" layoutY="14.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="105.0" text="Por Nome">
+<toggleGroup>
+<ToggleGroup fx:id="buscarPor" />
+</toggleGroup></RadioButton>
+<RadioButton fx:id="rbEmail" layoutX="23.0" layoutY="37.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="105.0" text="Por Email" toggleGroup="$buscarPor" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />
+<RadioButton fx:id="rbTipoContato" layoutX="109.0" layoutY="14.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="105.0" text="Tp de Contato" toggleGroup="$buscarPor" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />
+<RadioButton fx:id="rbDescrição" layoutX="109.0" layoutY="37.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="105.0" text="Descrição Tipo" toggleGroup="$buscarPor" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />
+</children></AnchorPane>
+  </content>
+</Tab>
+<Tab fx:id="tabCadastro" text="Cadastro">
+<content><Pane prefHeight="200.0" prefWidth="200.0">
+<children><GridPane layoutX="93.0" layoutY="110.0" prefHeight="146.0" prefWidth="379.0" xmlns:fx="http://javafx.com/fxml">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="185.0" minWidth="10.0" prefWidth="98.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="293.0" minWidth="10.0" prefWidth="281.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />
+  </rowConstraints>
+<children><Label text="Pessoa">
+</Label><Label text="Tipo de Contato" GridPane.rowIndex="1">
+</Label><Label text="Descrição" GridPane.rowIndex="2">
+</Label><Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" /><Label text="Complemento" GridPane.rowIndex="3" /><ComboBox fx:id="cbPessoa" prefHeight="25.0" prefWidth="280.0" GridPane.columnIndex="1" xmlns:fx="http://javafx.com/fxml" /><ComboBox fx:id="cbTipoContato" prefHeight="25.0" prefWidth="283.0" GridPane.columnIndex="1" GridPane.rowIndex="1" xmlns:fx="http://javafx.com/fxml" /><TextField fx:id="txtDescricao" GridPane.columnIndex="1" GridPane.rowIndex="2" /><TextField fx:id="txtComplemento" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+</children>
+</GridPane><Button fx:id="btnIncluir" layoutX="306.0" layoutY="284.0" mnemonicParsing="false" onAction="#btnIncluirClick" prefHeight="25.0" prefWidth="90.0" text="Salvar" />
+<Button fx:id="btnNovo" layoutX="210.0" layoutY="284.0" mnemonicParsing="false" onAction="#btnNovoClick" prefHeight="25.0" prefWidth="90.0" text="Novo" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />
+</children></Pane>
+</content></Tab>
+  </tabs>
+</TabPane>
+</top></BorderPane>

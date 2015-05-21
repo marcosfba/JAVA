@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.unitri.testador.PrincipalControler">
+	<top>
+		<MenuBar BorderPane.alignment="CENTER" xmlns:fx="http://javafx.com/fxml">
+			<menus>
+				<Menu mnemonicParsing="false" text="Arquivo">
+					<items>
+						<MenuItem fx:id="menuItemFechar" mnemonicParsing="false" onAction="#menuItemFecharClick" text="Fechar" />
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="false" text="Cadastros">
+					<items>
+						<MenuItem fx:id="menuItemCliente"      mnemonicParsing="false" onAction="#menuItemClienteClick" text="Cliente" />
+						<MenuItem fx:id="menuItemFuncionario"  mnemonicParsing="false" onAction="#menuItemFuncionarioClick" text="Funcionario"/>
+						<MenuItem fx:id="menuItemCategoria"    mnemonicParsing="false" onAction="#menuItemCategoriaClick" text="Categoria" />
+						<MenuItem fx:id="menuItemVeiculo"      mnemonicParsing="false" onAction="#menuItemVeiculoClick" text="Veículo"/>
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="false" text="Operações">
+					<items>
+						<MenuItem fx:id="menuItemEmprestimo" mnemonicParsing="false" onAction="#menuItemEmprestimoClick" text="Empréstimo" />
+						<MenuItem fx:id="menuItemDevolucao"  mnemonicParsing="false" onAction="#menuItemDevolucaoClick" text="Devolução" />
+						<MenuItem fx:id="menuItemAvaria"     mnemonicParsing="false" onAction="#menuItemAvariaClick" text="Avaria"/>
+						<MenuItem fx:id="menuItemMulta"      mnemonicParsing="false" onAction="#menuItemMultaClick" text="Multa"/>
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="false" text="Ajuda">
+					<items>
+						<MenuItem fx:id="menuItemAbout" mnemonicParsing="false" onAction="#menuItemAboutClick" text="About" />
+					</items>
+				</Menu>
+			</menus>
+		</MenuBar>
+	</top>
+</BorderPane>
