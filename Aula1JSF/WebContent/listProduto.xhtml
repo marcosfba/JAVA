@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Exercicio Final - Listagem de Produtos</title>
+</h:head>
+<body>
+	<h:form>
+	    <p:menubar>
+			<p:submenu label="Exercicio Final">
+				<p:menuitem value="Cadastro Produto" action="#{menuBean.cadProduto()}"  />
+				<p:separator />
+				<p:menuitem value="Listagem Produto" action="#{menuBean.listProduto()}"  />
+				<p:separator />
+			</p:submenu>
+		</p:menubar>
+	</h:form>
+	
+	<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+	<h2 style="text-decoration: underline">Consulta de Produtos</h2>
+	  <h:form id="formBuscarProduto">
+		<p:outputLabel value="Código do Produto:" /><br />
+		<p:inputText value="#{produtoBean.produto.codigo}" />
+		<br />
+		<p:outputLabel value="Descrição do Produto:" /><br />
+		<p:inputText value="#{produtoBean.produto.descricao}" />
+		<br/><br/>
+		<p:commandButton value="Buscar" action="#{produtoBean.buscar()}" update="formBuscarProduto"/>
+	 <br/>
+	 
+	 <h2 style="text-decoration: underline">Listagem dos Produtos</h2>
+	 <p:dataTable var="prod" value="#{produtoBean.listaProdutos}" 
+	   paginator="true" rows="5" 
+	   rowsPerPageTemplate="5,10,15" id="table"
+	   selection="#{produtoBean.prodSel}" selectionMode="single" rowKey="#{prod.id}">
+	    <p:column headerText="Codigo">
+	        <h:outputText value="#{prod.codigo}" />
+	    </p:column>
+	    <p:column headerText="Descrição">
+	        <h:outputText value="#{prod.descricao}" />
+	    </p:column>
+	    <p:column headerText="Preço de Custo">
+	        <h:outputText value="#{prod.precoCusto}" />
+	    </p:column>
+	    <p:column headerText="Preço de Venda">
+	        <h:outputText value="#{prod.precoVenda}" />
+	    </p:column>
+	    <p:column headerText="Quantidade">
+	        <h:outputText value="#{prod.quantidade}" />
+	    </p:column>
+	    <p:column headerText="Editar" style="width:5%">
+		    <p:commandButton icon="ui-icon-document-b" action="#{produtoBean.editar()}" >
+		    </p:commandButton>
+		 </p:column>    
+	    <p:column headerText="Excluir" style="width:5%">
+		    <p:commandButton icon="ui-icon-trash" action="#{produtoBean.excluir()}" ajax="true" update="formBuscarProduto"/>
+		 </p:column>    
+ 	</p:dataTable>
+    </h:form>
+	
+</body>
+</html>

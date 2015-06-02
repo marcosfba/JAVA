@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Média de Valores</title>
+</h:head>
+<body>
+	<h:form>
+	    <p:menubar>
+			<p:submenu label="Exercicios Aula1">
+				<p:menuitem value="Calculadora" action="#{menuBean.calculator()}" />
+				<p:separator />
+				<p:menuitem value="Fibonacci" action="#{menuBean.fibonacci()}" />
+				<p:separator />
+				<p:menuitem value="Telefone" action="#{menuBean.telefone()}"/>
+				<p:separator />
+				<p:menuitem value="Média" action="#{menuBean.media()}"/>
+				<p:separator />
+				<p:menuitem value="Login" action="#{menuBean.login()}"/>
+			</p:submenu>
+			<p:submenu label="Exercicio Final Aula 1">
+				<p:menuitem value="Exercicio 1 e 2" action="#{menuBean.exercicioFinal()}"/>
+			</p:submenu>
+		</p:menubar>
+	</h:form>
+	<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+	<h2 style="text-decoration: underline">Calcular Média</h2>
+		<h:form id="formMedia">
+		<p:outputLabel value="Valor a Enviar:" />
+		<p:inputText value="#{mediaBean.media.valor}" />
+		<br/><br/>
+		<p:commandButton action="#{mediaBean.adicionar()}" value="Adicionar" update="formMedia"/>
+		<p:commandButton action="#{mediaBean.calcular()}" value="Calcular" update="formMedia"/>
+		<br/><br/>
+		<p:outputLabel value="Resultado: " />
+		<p:inputText value="#{mediaBean.resultado}" readonly="true" />
+		<br/><br/>
+		<p:commandButton action="#{mediaBean.limpar()}" value=" Limpar " update="formMedia"/>		
+		</h:form>
+</body>
+</html>
