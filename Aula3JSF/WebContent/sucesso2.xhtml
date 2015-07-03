@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Aula3 - Validações JSF</title>
+</h:head>
+<body>
+	<h:form id="menubar">
+	    <p:menubar>
+			<p:submenu label="Validações">
+				<p:menuitem value="Conversão e Validação Manual" action="#{menuBean.validacaoManual()}" />
+				<p:separator />
+				<p:menuitem value="Conversão e Validação Implicita" action="#{menuBean.validacaImplicita()}"  />
+				<p:separator />
+				<p:menuitem value="Conversão e Validação Automatica Explicita" action="#{menuBean.validacaoExplicita()}"/>
+				<p:separator />
+				<p:menuitem value="Validação Própria" action="#{menuBean.validacaoPropria()}"/>
+			</p:submenu>
+			<p:submenu label="Exercicios sobre Validação">
+				<p:menuitem value="Exercicio 1- Validação de Números" action="#{menuBean.validateNumber()}" />
+				<p:separator />
+				<p:menuitem value="Exercicio 2- Validação de Data e Hora" action="#{menuBean.validateData()}"  />
+				<p:separator />
+				<p:menuitem value="Exercicio 3- Validação Regex" action="#{menuBean.validateRegex()}"  />
+				<p:separator />
+				<p:menuitem value="Exercicio 4- Validação de Campo Required" action="#{menuBean.validateCpRequired()}"  />
+			</p:submenu>
+			<p:submenu label="Exercicios JPA com JSF">
+				<p:menuitem value="Exercicio 1- Transação direto pelo Managed Bean"  />
+					<p:submenu label="Cadastros" icon="ui-icon-contact">
+	                	<p:menuitem value="Categorias" action="#{menuBean.cadCategoria()}" />
+	                	<p:menuitem value="Produtos" action="#{menuBean.cadProduto()}" />
+	            	</p:submenu>
+				<p:separator />
+				<p:menuitem value="Exercicio 2- Transação In View Filter"  />
+					<p:submenu label="Cadastros" icon="ui-icon-contact">
+	                	<p:menuitem value="Categorias" action="#{menuBean.cadCategoria2()}" />
+	                	<p:menuitem value="Produtos" action="#{menuBean.cadProduto2()}" />
+	            	</p:submenu>
+				<p:separator />
+				<p:menuitem value="Exercicio 3- Transação in Application Phase Listener"  />
+					<p:submenu label="Cadastros" icon="ui-icon-contact">
+	                	<p:menuitem value="Categorias" action="#{menuBean.cadCategoria3()}" />
+	                	<p:menuitem value="Produtos" action="#{menuBean.cadProduto3()}" />
+	            	</p:submenu>
+			</p:submenu>
+			<p:submenu label="Voltar">
+				<p:menuitem value="Inicio" action="#{menuBean.index()}"/>
+				<p:separator />
+			</p:submenu>
+		</p:menubar>
+	</h:form>
+
+
+	<h:form id="formValidar">
+		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+		<h2 style="text-decoration: underline">Dados validados com sucesso</h2>
+		
+		<p:panelGrid columns="2">
+            UserId: 
+            <p:outputLabel value="#{bidBean2.bid.userID}" />
+            Palavra Chave: 
+            <p:outputLabel value="#{bidBean2.bid.keyword}" />
+            Valor: 
+            <p:outputLabel value="#{bidBean2.bid.bidAmount}" />
+            Duração: 
+            <h:outputText value="#{bidBean2.bid.bidDuration}" />
+        </p:panelGrid>
+	</h:form>
+
+
+</body>
+</html>

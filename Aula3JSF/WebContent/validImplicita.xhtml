@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Aula3 - Validações JSF</title>
+	<style>
+            .error {color: red}
+        </style>
+</h:head>
+<body>
+	<h:form id="menubar">
+	    <p:menubar>
+			<p:submenu label="Validações">
+				<p:menuitem value="Conversão e Validação Manual" action="#{menuBean.validacaoManual()}" />
+				<p:separator />
+				<p:menuitem value="Conversão e Validação Implicita" action="#{menuBean.validacaImplicita()}"  />
+				<p:separator />
+				<p:menuitem value="Conversão e Validação Automatica Explicita" action="#{menuBean.validacaoExplicita()}"/>
+				<p:separator />
+				<p:menuitem value="Validação Própria" action="#{menuBean.validacaoPropria()}"/>
+			</p:submenu>
+			<p:submenu label="Exercicios sobre Validação">
+				<p:menuitem value="Exercicio 1- Validação de Números" action="#{menuBean.validateNumber()}" />
+				<p:separator />
+				<p:menuitem value="Exercicio 2- Validação de Data e Hora" action="#{menuBean.validateData()}"  />
+				<p:separator />
+				<p:menuitem value="Exercicio 3- Validação Regex" action="#{menuBean.validateRegex()}"  />
+				<p:separator />
+				<p:menuitem value="Exercicio 4- Validação de Campo Required" action="#{menuBean.validateCpRequired()}"  />
+			</p:submenu>
+			<p:submenu label="Exercicios JPA com JSF">
+				<p:menuitem value="Exercicio 1- Transação direto pelo Managed Bean"  />
+					<p:submenu label="Cadastros" icon="ui-icon-contact">
+	                	<p:menuitem value="Categorias" action="#{menuBean.cadCategoria()}" />
+	                	<p:menuitem value="Produtos" action="#{menuBean.cadProduto()}" />
+	            	</p:submenu>
+				<p:separator />
+				<p:menuitem value="Exercicio 2- Transação In View Filter"  />
+					<p:submenu label="Cadastros" icon="ui-icon-contact">
+	                	<p:menuitem value="Categorias" action="#{menuBean.cadCategoria2()}" />
+	                	<p:menuitem value="Produtos" action="#{menuBean.cadProduto2()}" />
+	            	</p:submenu>
+				<p:separator />
+				<p:menuitem value="Exercicio 3- Transação in Application Phase Listener"  />
+					<p:submenu label="Cadastros" icon="ui-icon-contact">
+	                	<p:menuitem value="Categorias" action="#{menuBean.cadCategoria3()}" />
+	                	<p:menuitem value="Produtos" action="#{menuBean.cadProduto3()}" />
+	            	</p:submenu>
+			</p:submenu>
+			<p:submenu label="Voltar">
+				<p:menuitem value="Inicio" action="#{menuBean.index()}"/>
+				<p:separator />
+			</p:submenu>
+		</p:menubar>
+	</h:form>
+
+
+	<h:form id="formValidar">
+		<p:panel id="panel" header="Validação Implicita">		
+		<p:panelGrid columns="3" cellspacing="4">
+			<p:outputLabel value="Id do Usuário"/>
+			<p:inputText id ="userId" value="#{bidBean2.bid.userID}" required="true" requiredMessage="Id é um campo requerido"/>
+			<p:message for="userId" styleClass="error"/> 
+		
+			<p:outputLabel value="Palavra Chave"/>
+			<p:inputText id ="keyWord" value="#{bidBean2.bid.keyword}" required="true" requiredMessage="Palavra chave é um campo requerido"/>
+			<p:message for="keyWord" styleClass="error"/>
+			
+			<p:outputLabel value="Valor Lance"/>
+			<p:inputText id ="valor" value="#{bidBean2.bid.bidAmount}" required="true" requiredMessage="Valor é um campo requerido" converterMessage="Valor deve ser um campo numérico"/>
+			<p:message for="valor" styleClass="error"/>
+			 
+			<p:outputLabel value="Duração Lance"/>
+			<p:inputText id ="duracao" value="#{bidBean2.bid.bidDuration}" required="true" requiredMessage="Duração é um campo requerido" converterMessage="Duração deve ser um campo numérico inteiro"/>
+			<p:message for="duracao" styleClass="error"/>
+		</p:panelGrid>
+		<p:commandButton value="Enviar Lance" action="#{bidBean2.doBid()}" update="formValidar"/>
+		</p:panel>
+
+	</h:form>
+
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Aula3 - Validações JSF</title>
+	<style>
+.error {
+	color: red
+}
+</style>
+</h:head>
+<body>
+	<h:form id="menubar">
+	    <p:menubar>
+			<p:submenu label="Validações">
+				<p:menuitem value="Conversão e Validação Manual" action="#{menuBean.validacaoManual()}" />
+				<p:separator />
+				<p:menuitem value="Conversão e Validação Implicita" action="#{menuBean.validacaImplicita()}"  />
+				<p:separator />
+				<p:menuitem value="Conversão e Validação Automatica Explicita" action="#{menuBean.validacaoExplicita()}"/>
+				<p:separator />
+				<p:menuitem value="Validação Própria" action="#{menuBean.validacaoPropria()}"/>
+			</p:submenu>
+			<p:submenu label="Exercicios sobre Validação">
+				<p:menuitem value="Exercicio 1- Validação de Números" action="#{menuBean.validateNumber()}" />
+				<p:separator />
+				<p:menuitem value="Exercicio 2- Validação de Data e Hora" action="#{menuBean.validateData()}"  />
+				<p:separator />
+				<p:menuitem value="Exercicio 3- Validação Regex" action="#{menuBean.validateRegex()}"  />
+				<p:separator />
+				<p:menuitem value="Exercicio 4- Validação de Campo Required" action="#{menuBean.validateCpRequired()}"  />
+			</p:submenu>
+			<p:submenu label="Exercicios JPA com JSF">
+				<p:menuitem value="Exercicio 1- Transação direto pelo Managed Bean"  />
+					<p:submenu label="Cadastros" icon="ui-icon-contact">
+	                	<p:menuitem value="Categorias" action="#{menuBean.cadCategoria()}" />
+	                	<p:menuitem value="Produtos" action="#{menuBean.cadProduto()}" />
+	            	</p:submenu>
+				<p:separator />
+				<p:menuitem value="Exercicio 2- Transação In View Filter"  />
+					<p:submenu label="Cadastros" icon="ui-icon-contact">
+	                	<p:menuitem value="Categorias" action="#{menuBean.cadCategoria2()}" />
+	                	<p:menuitem value="Produtos" action="#{menuBean.cadProduto2()}" />
+	            	</p:submenu>
+				<p:separator />
+				<p:menuitem value="Exercicio 3- Transação in Application Phase Listener"  />
+					<p:submenu label="Cadastros" icon="ui-icon-contact">
+	                	<p:menuitem value="Categorias" action="#{menuBean.cadCategoria3()}" />
+	                	<p:menuitem value="Produtos" action="#{menuBean.cadProduto3()}" />
+	            	</p:submenu>
+			</p:submenu>
+			<p:submenu label="Voltar">
+				<p:menuitem value="Inicio" action="#{menuBean.index()}"/>
+				<p:separator />
+			</p:submenu>
+		</p:menubar>
+	</h:form>
+
+
+<h:form>
+    <p:panel header="Validação Regex">
+        <h:panelGrid id="grid" columns="4" cellspacing="5">
+            <h:outputLabel for="telefone" value="Telefone com formato (^[0-9]{4,4}[-][0-9]{4,4}+$):" style="font-weight:bold"/>                    
+            <p:inputText id="telefone" value="#{bidExercicios.regexText}" validatorMessage="Valor informado incorreto para o tipo XXXX-XXXX">
+                <f:validateRegex pattern="^[0-9]{4,4}[-][0-9]{4,4}+$" />
+            </p:inputText>
+            <p:message for="telefone" />
+            <h:outputText value="#{bidExercicios.regexText}" />
+        </h:panelGrid>
+        <p:commandButton value="Validar" ajax="false" icon="ui-icon-check" validateClient="true" style="margin-right:10px"/>
+    </p:panel>
+</h:form>
+
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Aula 3 - Produtos</title>
+</h:head>
+<body>
+	<h:form id="menubar">
+	    <p:menubar>
+			<p:submenu label="Validações">
+				<p:menuitem value="Conversão e Validação Manual" action="#{menuBean.validacaoManual()}" />
+				<p:separator />
+				<p:menuitem value="Conversão e Validação Implicita" action="#{menuBean.validacaImplicita()}"  />
+				<p:separator />
+				<p:menuitem value="Conversão e Validação Automatica Explicita" action="#{menuBean.validacaoExplicita()}"/>
+				<p:separator />
+				<p:menuitem value="Validação Própria" action="#{menuBean.validacaoPropria()}"/>
+			</p:submenu>
+			<p:submenu label="Exercicios sobre Validação">
+				<p:menuitem value="Exercicio 1- Validação de Números" action="#{menuBean.validateNumber()}" />
+				<p:separator />
+				<p:menuitem value="Exercicio 2- Validação de Data e Hora" action="#{menuBean.validateData()}"  />
+				<p:separator />
+				<p:menuitem value="Exercicio 3- Validação Regex" action="#{menuBean.validateRegex()}"  />
+				<p:separator />
+				<p:menuitem value="Exercicio 4- Validação de Campo Required" action="#{menuBean.validateCpRequired()}"  />
+			</p:submenu>
+			<p:submenu label="Exercicios JPA com JSF">
+				<p:menuitem value="Exercicio 1- Transação direto pelo Managed Bean"  />
+					<p:submenu label="Cadastros" icon="ui-icon-contact">
+	                	<p:menuitem value="Categorias" action="#{menuBean.cadCategoria()}" />
+	                	<p:menuitem value="Produtos" action="#{menuBean.cadProduto()}" />
+	            	</p:submenu>
+				<p:separator />
+				<p:menuitem value="Exercicio 2- Transação In View Filter"  />
+					<p:submenu label="Cadastros" icon="ui-icon-contact">
+	                	<p:menuitem value="Categorias" action="#{menuBean.cadCategoria2()}" />
+	                	<p:menuitem value="Produtos" action="#{menuBean.cadProduto2()}" />
+	            	</p:submenu>
+				<p:separator />
+				<p:menuitem value="Exercicio 3- Transação in Application Phase Listener"  />
+					<p:submenu label="Cadastros" icon="ui-icon-contact">
+	                	<p:menuitem value="Categorias" action="#{menuBean.cadCategoria3()}" />
+	                	<p:menuitem value="Produtos" action="#{menuBean.cadProduto3()}" />
+	            	</p:submenu>
+			</p:submenu>
+			<p:submenu label="Voltar">
+				<p:menuitem value="Inicio" action="#{menuBean.index()}"/>
+				<p:separator />
+			</p:submenu>
+		</p:menubar>
+	</h:form>
+	
+		<h:form id="formProduto">
+	    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+		<p:panel header="Cadastro / Edição do Produto">
+			<p:panelGrid columns="3" cellspacing="4">
+				<p:outputLabel value="Codigo do Produto" />
+				<p:inputText id="codigoProd" value="#{produtoBean2.produto.codigo}" 
+				  required="true"
+				  requiredMessage="Código do produto é um campo requerido"
+				  validatorMessage="Código do produto deve conter pelo menos 6 caracteres">
+				  	<f:validateLength minimum="6"/>
+				</p:inputText>
+				<p:message for="codigoProd" styleClass="error"/> 
+
+				<p:outputLabel value="Descrição do Produto" />
+				<p:inputText id="descProd" value="#{produtoBean2.produto.descricao}" 
+				  required="true"
+				  requiredMessage="Descrição do produto é um campo requerido"
+				  validatorMessage="Descrição do produto deve conter pelo menos 10 caracteres">
+				  	<f:validateLength minimum="10"/>
+				</p:inputText>
+				<p:message for="descProd" styleClass="error"/> 
+
+				<p:outputLabel value="Preço de Custo" />
+				<p:inputText id="precoCusto" value="#{produtoBean2.produto.precoCusto}" 
+				  required="true"
+				  requiredMessage="Preço de custo do produto é um campo requerido"
+				  validatorMessage="Preço de custo do produto não pode ser menor que zero">
+				    <f:validateDoubleRange minimum="0.00" />
+				</p:inputText>
+				<p:message for="precoCusto" styleClass="error"/> 
+
+				<p:outputLabel value="Preço de Venda" />
+				<p:inputText id="precoVenda" value="#{produtoBean2.produto.precoVenda}" 
+				  required="true"
+				  requiredMessage="Preço de venda do produto é um campo requerido"
+				  validatorMessage="Preço de venda do produto não pode ser menor que zero">
+				    <f:validateDoubleRange minimum="0.00" />
+				</p:inputText>
+				<p:message for="precoVenda" styleClass="error"/> 
+				
+				<p:outputLabel value="Quantidade" />
+				<p:inputText id="qtd" value="#{produtoBean2.produto.quantidade}" 
+				  required="true"
+				  requiredMessage="Quantidade do produto é um campo requerido"
+				  validatorMessage="Quantidade do produto não pode ser menor que zero">
+				    <f:validateLongRange minimum="0" />
+				</p:inputText>
+				<p:message for="qtd" styleClass="error"/> 
+				
+				<p:outputLabel value="Selecione a categoria:" />
+				<p:selectOneMenu id="categoria" value="#{produtoBean2.produto.categoria}" required="true"
+				    requiredMessage="A categoria não pode ficar em branco">
+			    	<f:selectItem itemLabel="Selecionar" itemValue=""/>
+	            	<f:selectItems value="#{produtoBean2.listaCategorias}" var="mark" itemLabel="#{mark.descricao}"/>	            	
+	        	</p:selectOneMenu>
+	        	<p:message for="categoria" styleClass="error"/>
+
+				<p:outputLabel value="Data de entrada" />
+				<p:inputText id="dtEntrada" value="#{produtoBean2.produto.dataEntrada}" 
+				  required="true"
+				  requiredMessage="Data do produto é um campo requerido"
+				  validatorMessage="Data do produto no formato errado dd/MM/yyyy">
+				    <f:convertDateTime pattern="dd/MM/yyyy" />
+				</p:inputText>
+				<p:message for="dtEntrada" styleClass="error"/> 
+
+			</p:panelGrid>
+			<p:commandButton value="Incluir" action="#{produtoBean2.salvar()}" ajax ="true" update="formListaProduto"/>
+			<p:commandButton value="Alterar" action="#{produtoBean2.alterar()}" ajax ="true" update="formListaProduto"/>
+			<p:commandButton value="Limpar"  action="#{produtoBean2.limpar()}" ajax ="true" update="formProduto"/>		
+		</p:panel>
+		</h:form>
+		
+		<h:form id="formListaProduto">		
+		<p:panel header="Listagem dos Produtos">
+		<p:dataTable var="produto" value="#{produtoBean2.listaProdutos}" paginator="true" rows="5" id="table"
+			selection="#{produtoBean2.prodSel}" selectionMode="single" rowKey="#{produto.id}">
+			<p:column headerText="Id do Produto">
+				<h:outputText value="#{produto.id}" />
+			</p:column>
+			<p:column headerText="Código do Produto">
+				<h:outputText value="#{produto.codigo}" />
+			</p:column>
+			<p:column headerText="Descrição do Produto">
+				<h:outputText value="#{produto.descricao}" />
+			</p:column>
+			<p:column headerText="Preço de Custo">
+				<h:outputText value="#{produto.precoCusto}" />
+			</p:column>
+			<p:column headerText="Preço de Venda">
+				<h:outputText value="#{produto.precoVenda}" />
+			</p:column>
+			<p:column headerText="Quantidade">
+				<h:outputText value="#{produto.quantidade}" />
+			</p:column>
+			<p:column headerText="Data de Entrada">
+				<h:outputText value="#{produto.dataEntrada}">
+				<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+			<p:column headerText="Cód.Categoria">
+				<h:outputText value="#{produto.categoria.id}" />
+			</p:column>
+			<p:column headerText="Desc.Categoria">
+				<h:outputText value="#{produto.categoria.descricao}" />
+			</p:column>
+			<p:column headerText="Editar" style="width:5%">
+				<p:commandButton icon="ui-icon-document-b" action="#{produtoBean2.editar()}" ajax="true" update="formProduto" />
+			</p:column>
+			<p:column headerText="Excluir" style="width:5%">
+				<p:commandButton icon="ui-icon-trash" action="#{produtoBean2.excluir()}" ajax="true" update="formProduto" />
+			</p:column>
+		</p:dataTable>
+		</p:panel>
+		</h:form>
+	
+</body>
+</html>
