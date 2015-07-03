@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Aula 2 - Cadastro de Produtos</title>
+</h:head>
+<body>
+	<h:form>
+	    <p:menubar>
+			<p:submenu label="Cadastros">
+				<p:menuitem value="Cadastro Marca" action="#{menuBean.cadMarca()}"  />
+				<p:separator />
+				<p:menuitem value="Cadastro Produto" action="#{menuBean.cadProduto()}"  />
+				<p:separator />
+			</p:submenu>
+			<p:submenu label="Consultas">
+				<p:menuitem value="Consulta Marca" action="#{menuBean.listMarca()}"  />
+				<p:separator />
+				<p:menuitem value="Consulta Produto" action="#{menuBean.listProduto()}"  />
+				<p:separator />
+			</p:submenu>
+			<p:submenu label="Voltar">
+				<p:menuitem value="Inicio" action="#{menuBean.index()}"/>
+				<p:separator />
+			</p:submenu>
+		</p:menubar>
+	</h:form>
+	
+	<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+	<h2 style="text-decoration: underline">Edição de produto</h2>
+		<h:form id="formProduto">
+			<p:outputLabel value="Código do Produto:" /><br />
+			<p:inputText value="#{produtoBean.produto.codigo}" />
+			<br />
+			<p:outputLabel value="Descrição do Produto:" /><br />
+			<p:inputText value="#{produtoBean.produto.descricao}" />
+			<br />
+			<p:outputLabel value="Preço de Custo:" /><br />
+			<p:inputText value="#{produtoBean.produto.precoCusto}" />
+			<br />
+			<p:outputLabel value="Preço de Venda:" /><br />
+			<p:inputText value="#{produtoBean.produto.precoVenda}" />
+			<br />
+			<p:outputLabel value="Quantidade:" /><br />
+			<p:inputText value="#{produtoBean.produto.quantidade}" />
+			<br />
+			<p:outputLabel value="Selecione a marca:" /><br />
+			<p:selectOneMenu value="#{produtoBean.produto.marca}">
+		    	<f:selectItem itemLabel="Selecionar" itemValue=""/>
+            	<f:selectItems value="#{produtoBean.listaMarcas}" var="mark" itemLabel="#{mark.descricao}"/>
+        	</p:selectOneMenu>
+			<br /><br />
+			<p:commandButton value="Incluir" action="#{produtoBean.salvar()}" update="formProduto"/>
+			<p:commandButton value="Limpar"  action="#{produtoBean.limpar()}" update="formProduto"/>		
+	</h:form>
+</body>
+</html>
