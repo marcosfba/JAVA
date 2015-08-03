@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+<h:head>
+	<title>Trabalho final-FRAMEWORKS-WEB02</title>
+	<style>
+		.ui-layout-container {
+			width: 1366px;
+			height: 768px;
+			border: none !important;
+		}
+		.ui-widget, .ui-widget .ui-widget {    
+ 		   font-size: 90% !important;
+		} 
+		</style>
+</h:head>
+
+<body style="width:100%;margin:0 auto; padding:0;">
+	<h:form id="formMain">
+		<p:panel header="Menu Pagina Inicial" style="text-align:center;border: 0px;padding:0;">
+			<p:commandButton value="Administrador Site" oncomplete="PF('loginAdm').show();" process="@form" update=":formUsuario" ajax="true"/>
+			<p:commandButton value="Usuário do Site" oncomplete="PF('loginUser').show();" process="@form" update="formUsuarioSite" ajax="true"/>
+			<p:commandButton value="Site Externo" action="#{menuBean.userComum()}"/>
+		</p:panel>
+	</h:form>
+	
+	
+	<p:dialog header="Login do Administrador do Site" widgetVar="loginAdm" position="center" showEffect="explode">	
+	<h:form id="formUsuario">
+	    <p:messages id="messAdm" showDetail="true" autoUpdate="true" closable="true" for="messAdm" />
+		<p:panelGrid columns="3" cellspacing="4">
+			<p:outputLabel value="Nome" />
+			<p:inputText id="username"
+				value="#{usuarioBean.usuario.userName}" required="true"
+				requiredMessage="Nome para acesso é requerido">
+			</p:inputText>
+			<p:message for="username" styleClass="error" />
+
+			<p:outputLabel value="Senha" />
+				<p:password id="descSenha"
+					value="#{usuarioBean.usuario.password}" required="true"
+					requiredMessage="Entre com a senha para o Login">
+				</p:password>
+				<p:message for="descSenha" styleClass="error" />
+		</p:panelGrid>
+		<center>
+		<p:commandButton value="Login" action="#{usuarioBean.logar()}"  ajax="true" update="formUsuario" />
+		</center>
+	</h:form>
+	</p:dialog>
+
+	<p:dialog header="Login do Usuário" widgetVar="loginUser" position="center" showEffect="explode">	
+	<h:form id="formUsuarioSite">
+		<p:messages id="messUser" showDetail="true" autoUpdate="true" closable="true" for="messUser" />
+		<p:panelGrid columns="3" cellspacing="4">
+			<p:outputLabel value="Nome" />
+			<p:inputText id="username"
+				value="#{usuarioBean.usuario.userName}" required="true"
+				requiredMessage="Nome para acesso é requerido">
+			</p:inputText>
+			<p:message for="username" styleClass="error" />
+
+			<p:outputLabel value="Senha" />
+				<p:password id="descSenha"
+					value="#{usuarioBean.usuario.password}" required="true"
+					requiredMessage="Entre com a senha para o Login">
+				</p:password>
+				<p:message for="descSenha" styleClass="error" />
+		</p:panelGrid>
+		<center>
+		<p:commandButton value="Login" action="#{usuarioBean.logarUser()}"  ajax="true" update="formUsuarioSite" />
+		</center>
+	</h:form>
+	</p:dialog>
+</body> 
+</html>

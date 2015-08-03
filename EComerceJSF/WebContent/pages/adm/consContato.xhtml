@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="layout.xhtml">
+
+<ui:define name="content">
+	<h:form id="formContato">
+		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+		<p:panel header="Consulta de Contatos">
+			<p:panelGrid columns="3" style="border:0px;">
+				<p:outputLabel value="Codigo da Contato" />
+				<p:inputText id="userId" value="#{contatoBean.contato.id}"/>
+				<p:message for="userId" styleClass="error" />
+
+				<p:outputLabel value="Tipo de Contato:"/>
+				<p:selectOneMenu id="tipoContatoSel" value="#{contatoBean.contato.tipoContato}"  
+					converter="tipoContatoConverter">
+						<f:selectItem itemLabel="Selecionar" itemValue="" />
+						<f:selectItems value="#{enumeratorsBeanUtil.listTiposContatos}" var="tipo" 
+							itemLabel="#{tipo.description}" itemValue="#{tipo.value}" />
+				</p:selectOneMenu>
+				<p:message for="tipoContatoSel" styleClass="error" />
+			</p:panelGrid>
+			
+			<p:commandButton value="Novo" action="#{contatoBean.limpar()}" ajax="true" update="formContato,formListaContato" />
+			<p:commandButton value="Buscar" action="#{contatoBean.buscar()}" ajax="true" update="formListaContato" />
+		</p:panel>
+	</h:form>
+
+	<h:form id="formListaContato">
+		<p:panel header="Listagem das Contatos">
+			<p:dataTable var="contato" value="#{contatoBean.listaContato}" emptyMessage="Sem registros para serem demonstrados"
+				paginator="true" rows="5" id="table" selection="#{contatoBean.contatoSel}" rowKey="#{contato.id}">
+				<p:column headerText="Código do Contato">
+					<h:outputText value="#{contato.id}" />
+				</p:column>
+				<p:column headerText="Pessoa">
+					<h:outputText value="#{contato.pessoa.nome}" />
+				</p:column>
+				<p:column headerText="Descrição da Contato">
+					<h:outputText value="#{contato.email}" />
+				</p:column>
+				<p:column headerText="Tipo de Contato">
+					<h:outputText value="#{contato.tipoContato}" />
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+	
+</ui:define>
+</ui:composition>

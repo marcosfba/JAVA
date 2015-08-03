@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="layout.xhtml">
+
+<ui:define name="content">
+	<h:form id="formUsuario">
+		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+		<p:panel header="Consulta de Usuario">
+			<p:panelGrid columns="3" style="border:0px;">
+				<p:outputLabel value="Codigo do Usuario" />
+				<p:inputText id="userId" value="#{usuarioBean.usuario.id}"/>
+				<p:message for="userId" styleClass="error" />
+
+				<p:outputLabel value="Nome do usuário" />
+				<p:inputText id="username" 	value="#{usuarioBean.usuario.userName}" size="40"/>
+				<p:message for="username" styleClass="error" />
+				
+				<p:outputLabel value="Email do usuário" />
+				<p:inputText id="email" value="#{usuarioBean.usuario.email}" size="40"/>
+				<p:message for="email" styleClass="error" />
+				
+			</p:panelGrid>
+			
+			<p:commandButton value="Novo" action="#{usuarioBean.limpar()}" ajax="true" update="formUsuario,formListaUsuarios" />
+			<p:commandButton value="Buscar" action="#{usuarioBean.consultar()}" ajax="true" update="formListaUsuarios" />
+		</p:panel>
+	</h:form>
+
+	<h:form id="formListaUsuarios">
+		<p:panel header="Listagem dos Usuários">
+			<p:dataTable var="userGrid" value="#{usuarioBean.listaUsuarios}" emptyMessage="Sem registros para serem demonstrados"
+				paginator="true" rows="5" id="table" selection="#{usuarioBean.usuarioSel}" 
+				rowKey="#{userGrid.id}">
+				<p:column headerText="Código do Usuário">
+					<h:outputText value="#{userGrid.id}" />
+				</p:column>
+				<p:column headerText="Nome do Usuário">
+					<h:outputText value="#{userGrid.userName}" />
+				</p:column>
+				<p:column headerText="Email do usuário">
+					<h:outputText value="#{userGrid.email}" />
+				</p:column>
+				<p:column headerText="Tipo de Usuário">
+					<h:outputText value="#{userGrid.tipoUsuario}" />
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+	
+</ui:define>
+</ui:composition>

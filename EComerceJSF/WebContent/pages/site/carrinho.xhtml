@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+
+<h:form id="formCarrinho">
+	<p:messages id="messages" showDetail="true" autoUpdate="true"
+		closable="true" />
+	<p:dataGrid var="produto" value="#{auxProdutoBean.listProdutosFotos}"
+		columns="3" layout="grid" rows="6" paginator="true">
+		<f:facet name="header">
+            Catalógo de Produtos
+        </f:facet>
+
+        <p:panel header="#{produto.descricao}" style="text-align:center">
+            <p:panelGrid columns="1" style="width:100%">
+                <h:outputText value="Valor: #{produto.vlrVenda}" style="text-align:right" />
+                <h:outputText value="Caracteristicas: #{produto.complemento}" style="text-align:left" />
+                <p:lightBox>
+  	  				<h:outputLink value="#{auxProdutoBean.diretorio}#{produto.fotoOriginal}#{produto.extensao}" title="#{produto.nomeImagem}" >   
+  	  					<p:graphicImage value="#{auxProdutoBean.diretorio}#{produto.fotoTumb}#{produto.extensao}" width="125" height="125"/>
+       				</h:outputLink>     
+   				</p:lightBox>
+                
+ 				<p:commandButton value="Detalhes Produto" oncomplete="PF('produtoDialog').show();" process="@form" update=":formDetProduto">
+ 					<f:setPropertyActionListener value="#{produto}" target="#{auxProdutoBean.produtoDTO}" />
+ 				</p:commandButton> 				
+ 				<p:commandButton value="Adicionar Carrinho" ajax="true" update="formCarrinho" action="#{auxProdutoBean.adicionaProdutoCarrinho(produto.idProduto)}"/> 
+	 			<p:commandButton value="Galeria do Produto" action="#{auxProdutoBean.visualizaGaleria(produto.idProduto)}" 
+					ajax="true" update=":listaGaleriaFotos" oncomplete="PF('produtoDialogFoto').show();"/>
+             </p:panelGrid>
+        </p:panel> 
+	</p:dataGrid>
+</h:form>
+
+<p:dialog header="Detalhes do Produto" widgetVar="produtoDialog"
+	showEffect="fade" hideEffect="fade" resizable="false" position="center">
+	<h:form id="formDetProduto">
+		<p:panelGrid columns="2" style="border:0px;">
+			<p:outputLabel value="Código de Barras" />
+			<h:outputText value="#{auxProdutoBean.produtoDTO.codBarras}" />
+
+			<p:outputLabel value="Descrição do Produto" />
+			<h:outputText value="#{auxProdutoBean.produtoDTO.descricao}" />
+
+			<p:outputLabel value="Complemento referente ao Produto" />
+			<h:outputText value="#{auxProdutoBean.produtoDTO.complemento}" />
+
+			<p:outputLabel value="Descrição da Marca" />
+			<h:outputText value="#{auxProdutoBean.produtoDTO.marca.descricao}" />
+
+			<p:outputLabel value="Complemento da Marca" />
+			<h:outputText value="#{auxProdutoBean.produtoDTO.marca.complemento}" />
+
+			<p:outputLabel value="Descrição da Categoria" />
+			<h:outputText
+				value="#{auxProdutoBean.produtoDTO.categoria.descricao}" />
+
+			<p:outputLabel value="Complemento da Categoria" />
+			<h:outputText
+				value="#{auxProdutoBean.produtoDTO.categoria.complemento}" />
+
+			<p:outputLabel value="Valor do Produto" />
+			<h:outputText value="#{auxProdutoBean.produtoDTO.vlrVenda}" />
+		</p:panelGrid>
+		<center>
+			<p:commandButton value="Adicionar Carrinho" update="formCarrinho"
+				action="#{auxProdutoBean.adicionaProdutoCarrinho(auxProdutoBean.produtoDTO.idProduto)}"
+				ajax="true" />
+			<p:commandButton value="Galeria do Produto"
+				action="#{auxProdutoBean.visualizaGaleria(auxProdutoBean.produtoDTO.idProduto)}"
+				ajax="true" update=":listaGaleriaFotos"
+				oncomplete="PF('produtoDialogFoto').show();" />
+		</center>
+	</h:form>
+</p:dialog>
+
+<p:dialog header="Galeria de Fotos do Produto"
+	widgetVar="produtoDialogFoto" showEffect="fade" hideEffect="fade"
+	resizable="false" position="center">
+	<h:form id="listaGaleriaFotos">
+		<ui:repeat var="fotos" value="#{auxProdutoBean.listaFotos}">
+			<div style="position: relative; float: left; padding: 10px">
+				<p:lightBox>
+					<h:outputLink
+						value="#{auxProdutoBean.diretorio}#{fotos.fotoOriginal}#{fotos.extensao}"
+						title="#{fotos.nomeImagem}">
+						<p:graphicImage
+							value="#{auxProdutoBean.diretorio}#{fotos.fotoTumb}#{fotos.extensao}"
+							width="125" height="125" />
+					</h:outputLink>
+				</p:lightBox>
+			</div>
+		</ui:repeat>
+	</h:form>
+</p:dialog>
+
+</html>

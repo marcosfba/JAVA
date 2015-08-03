@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="layout.xhtml">
+
+<ui:define name="content">
+	<h:form id="formTelefone">
+		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+		<p:panel header="Cadastro / Edição do Telefone">
+			<p:panelGrid columns="3" style="border:0px;">
+				<p:outputLabel value="Codigo da Telefone" />
+				<p:inputText id="userId" value="#{telefoneBean.telefone.id}"
+					readonly="true" />
+				<br />
+				
+				<p:outputLabel value="Selecione a pessoa:" />
+				<p:selectOneMenu id="idPessoa"
+					value="#{telefoneBean.telefone.pessoa}" required="true"
+					requiredMessage="A pessoa  não pode deixar de ser selecionada">
+					<f:selectItem itemLabel="Selecionar" itemValue="" />
+					<f:selectItems value="#{telefoneBean.listaPessoas}" var="mark"
+						itemLabel="#{mark.nome}" />
+				</p:selectOneMenu>
+				<p:message for="idPessoa" styleClass="error" />				
+
+				<p:outputLabel value="Nº do Telefone" />
+				<p:inputText id="numero"
+					value="#{telefoneBean.telefone.numeroTelefone}" required="true"
+					requiredMessage="Número do Telefone é um campo requerido"
+					validatorMessage="Número do Telefone deve conter pelo menos 8 caracteres">
+					<f:validateLength minimum="8" />
+				</p:inputText>
+				<p:message for="numero" styleClass="error" />
+				
+				<p:outputLabel value="Tipo de Telefone:"/>
+				<p:selectOneMenu id="tpTelefone" value="#{telefoneBean.telefone.tipoTelefone}" required="true" 
+					converter="tipoTelefoneConverter" requiredMessage="Deve-se selecionar o tipo de Telefone"
+					validatorMessage="Tipo de Telefone inválido">
+						<f:selectItem itemLabel="Selecionar" itemValue="" />
+						<f:selectItems value="#{enumeratorsBeanUtil.listTiposTelefones}" var="tipos" 
+							itemLabel="#{tipos.description}" itemValue="#{tipos.value}" />
+				</p:selectOneMenu>
+				<p:message for="tpTelefone" styleClass="error" />
+								
+			</p:panelGrid>
+			
+			<p:commandButton value="Incluir" action="#{telefoneBean.salvar()}"
+				ajax="true" update="formListaTelefone" />
+			<p:commandButton value="Alterar" action="#{telefoneBean.alterar()}"
+				ajax="true" update="formListaTelefone" />
+			<p:commandButton value="Limpar" action="#{telefoneBean.limpar()}" 
+			   immediate="true" process="@this" update="formTelefone" />
+		</p:panel>
+	</h:form>
+
+	<h:form id="formListaTelefone">
+		<p:panel header="Listagem dos Telefones">
+			<p:dataTable var="telefone" value="#{telefoneBean.listaTelefone}"
+				paginator="true" rows="5" id="table" selection="#{telefoneBean.telefoneSel}"  
+				rowKey="#{telefone.id}" emptyMessage="Sem registros para serem demonstrados">
+				<p:column headerText="Código do Telefone">
+					<h:outputText value="#{telefone.id}" />
+				</p:column>
+				<p:column headerText="Nome Pessoa">
+					<h:outputText value="#{telefone.pessoa.nome}" />
+				</p:column>
+				<p:column headerText="Nº do Telefone">
+					<h:outputText value="#{telefone.numeroTelefone}" />
+				</p:column>
+				<p:column headerText="Descrição Tipo Telefone">
+					<h:outputText value="#{telefone.tipoTelefone}" />
+				</p:column>
+				<p:column headerText="Editar" style="width:8%">
+				<center>
+					<p:commandButton icon="ui-icon-document-b" action="#{telefoneBean.editar()}" ajax="true" update="formTelefone">
+						<f:setPropertyActionListener value="#{telefone}" target="#{telefoneBean.telefoneSel}" />
+					</p:commandButton>
+				</center>
+				</p:column>
+				<p:column headerText="Excluir" style="width:8%">
+				<center>
+					<p:commandButton value="Excluir" oncomplete="PF('detalheDialog').show();" process="@form" update="formRemover">
+						<f:setPropertyActionListener value="#{telefone}" target="#{telefoneBean.telefoneSel}" />
+					</p:commandButton>
+				</center>
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+	
+	<p:dialog header="Excluir Telefone" widgetVar="detalheDialog" position="center" showEffect="explode">
+	<h:form id="formRemover">
+		<p:panel header="Confirma a remoção?">
+		<center>
+			<p:commandButton value="Sim" action="#{telefoneBean.excluir()}" ajax="true" update="formTelefone,formListaTelefone" oncomplete="PF('detalheDialog').hide()" />
+			<p:commandButton value="Não" action="#{telefoneBean.limpar()}" ajax="true" update="formTelefone,formListaTelefone" oncomplete="PF('detalheDialog').hide()" />
+		</center>
+		</p:panel>    
+      </h:form>
+	</p:dialog>
+	
+</ui:define>
+</ui:composition>

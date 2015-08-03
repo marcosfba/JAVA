@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="layout.xhtml">
+
+<ui:define name="content">
+	<h:form id="formPedido">
+		<p:messages id="mesPedido" showDetail="true" autoUpdate="true" closable="true" for="mesPedido" />
+		<p:panel header="Cadastro / Edição da Operação">
+			<p:panelGrid columns="3" style="border:0px;">
+				<p:outputLabel value="Codigo da Operação" />
+				<p:inputText id="userId" value="#{pedidoBean.operacao.id}" readonly="true" />
+				<br />
+			
+				<p:outputLabel value="Data do Pedido" />
+				<p:calendar id="dtPedido" value="#{pedidoBean.operacao.dtOperacao}"  showOn="button"
+				  required="true" requiredMessage="Favor informar a data da operação"
+				  validatorMessage="Data de nascimento no formato errado dd/MM/yyyy" pattern="dd/MM/yyyy"/>				  
+				<p:message for="dtPedido" styleClass="error" />
+
+				<p:outputLabel value="Selecione a pessoa:" />
+				<p:selectOneMenu id="pessoa" required="true"
+				    requiredMessage="Deve-se selecionar a Pessoa" value="#{pedidoBean.operacao.pessoa}">
+					<f:selectItem itemLabel="Selecionar" itemValue="" />
+					<f:selectItems value="#{pedidoBean.listPessoas}" var="mark" itemLabel="#{mark.nome}" />
+				</p:selectOneMenu>
+				<p:message for="pessoa" styleClass="error" />
+
+				<p:outputLabel value="Selecione o tipo de operação:"/>
+				<p:selectOneMenu id="tpOperacao" value="#{pedidoBean.operacao.tipoOperacao}" required="true" 
+					converter="tipoOperacaoConverter" requiredMessage="Deve-se selecionar o tipo de Operação"
+					validatorMessage="Tipo de Operação Inválido">
+						<f:selectItem itemLabel="Selecionar" itemValue="" />
+						<f:selectItems value="#{enumeratorsBeanUtil.listTiposOperacao}" var="tipos" 
+							itemLabel="#{tipos.description}" itemValue="#{tipos.value}" />
+				</p:selectOneMenu>
+				<p:message for="tpOperacao" styleClass="error" />
+
+				<p:outputLabel value="Selecione o status:"/>
+				<p:selectOneMenu id="tpStatus" value="#{pedidoBean.operacao.tipoStatus}" required="true" 
+					converter="tipoStatusConverter" requiredMessage="Deve-se selecionar o Status"
+					validatorMessage="Status inválido">
+						<f:selectItem itemLabel="Selecionar" itemValue="" />
+						<f:selectItems value="#{enumeratorsBeanUtil.listTiposStatus}" var="tipos" 
+							itemLabel="#{tipos.description}" itemValue="#{tipos.value}" />
+				</p:selectOneMenu>
+				<p:message for="tpStatus" styleClass="error" />
+
+				<p:outputLabel value="Selecione o tipo de Pagamento:"/>
+				<p:selectOneMenu id="tpPagamento" value="#{pedidoBean.operacao.tipoPagamento}" required="true" 
+					converter="tipoPagamentoConverter" requiredMessage="Deve-se selecionar o Tipo de Pagamento"
+					validatorMessage="Tipo de Pagamento inválido">
+						<f:selectItem itemLabel="Selecionar" itemValue="" />
+						<f:selectItems value="#{enumeratorsBeanUtil.listTiposPagamentos}" var="tipos" 
+							itemLabel="#{tipos.description}" itemValue="#{tipos.value}" />
+				</p:selectOneMenu>
+				<p:message for="tpPagamento" styleClass="error" />
+				
+ 				<p:outputLabel value="Itens do Pedido" />
+				<p:commandButton value="Adicionar Itens" oncomplete="PF('detalheItensPedido').show();" immediate="true" ajax="true" update="formItemPedido">
+					<f:setPropertyActionListener value="#{pedidoBean.item}" target="#{pedidoBean.item}" />
+				</p:commandButton>
+
+ 				<br />
+			</p:panelGrid>
+			<p:commandButton value="Incluir" action="#{pedidoBean.salvar()}"
+				ajax="true" update="formPedido, formListaPedidos" />
+			<p:commandButton value="Alterar" action="#{pedidoBean.alterar()}"
+				ajax="true" update="formPedido, formListaPedidos" />
+			<p:commandButton value="Limpar" action="#{pedidoBean.limpar()}" 
+			   immediate="true" process="@this" update="formPedido" />
+		</p:panel>
+	</h:form>
+
+	<h:form id="formListaPedidos">
+	<p:panel header="Listagem das Operações">
+		<p:dataTable var="operacao" value="#{pedidoBean.listOperacoes}"
+			paginator="true" rows="5" id="table" selection="#{pedidoBean.operacaoSel}" 
+			rowKey="#{operacao.id}" emptyMessage="Sem registros para serem demonstrados">
+			<p:column headerText="Código da Operação">
+				<h:outputText value="#{operacao.id}" />
+			</p:column>
+			<p:column headerText="Data do Pedido">
+				<h:outputText value="#{operacao.dtOperacao}">
+				<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+			<p:column headerText="Nome da Pessoa">
+				<h:outputText value="#{operacao.pessoa.nome}" />
+			</p:column>
+			<p:column headerText="Tipo de Operação">
+				<h:outputText value="#{operacao.tipoOperacao.descricao}" />
+			</p:column>
+			<p:column headerText="Status">
+				<h:outputText value="#{operacao.tipoStatus.descricao}" />
+			</p:column>
+			<p:column headerText="Tipo de Pagamento">
+				<h:outputText value="#{operacao.tipoPagamento.descricao}" />
+			</p:column>
+			<p:column headerText="Itens" style="width:5%">
+			<center>
+				<p:commandButton value="View" icon="ui-icon-document-b" oncomplete="PF('detalheConsItensPedido').show();" process="@form" update=":formConsItemPedido">
+					<f:setPropertyActionListener value="#{operacao}" target="#{pedidoBean.operacaoSel}" />
+				</p:commandButton>
+			</center>
+			</p:column>
+			<p:column headerText="Editar" style="width:5%">
+			  <center><p:commandButton action="#{pedidoBean.editar()}" icon="ui-icon-document-b" ajax="true" process="@form" update="formPedido">
+					<f:setPropertyActionListener value="#{operacao}" target="#{pedidoBean.operacaoSel}" />
+				</p:commandButton>
+			  </center> 
+			</p:column>
+			<p:column headerText="Excluir" style="width:5%">
+			<center>
+				<p:commandButton value="Excluir" oncomplete="PF('detalheDialog').show();" process="@form" update="formRemover">
+					<f:setPropertyActionListener value="#{operacao}" target="#{pedidoBean.operacaoSel}" />
+				</p:commandButton>
+			</center>
+			</p:column>
+		</p:dataTable>
+	</p:panel>
+	</h:form>
+	
+	<p:dialog header="Exclusão do Pedido" widgetVar="detalheDialog" position="center" showEffect="explode">
+	<h:form id="formRemover">
+		<p:panel header="Confirma a remoção?">
+		<center>
+			<p:commandButton value="Sim" action="#{pedidoBean.excluir()}" ajax="true" update="formPedido,formListaPedidos" oncomplete="PF('detalheDialog').hide()" />
+			<p:commandButton value="Não" action="#{pedidoBean.limpar()}" ajax="true" update="formPedido,formListaPedidos" oncomplete="PF('detalheDialog').hide()" />
+		</center>
+		</p:panel>    
+      </h:form>
+	</p:dialog>
+	
+	
+	<p:dialog header="Inclusão de Item do Pedido" widgetVar="detalheItensPedido" position="center" showEffect="explode">
+	<h:form id="formItemPedido">
+	    <p:messages id="mesItens" showDetail="true" autoUpdate="true" closable="true" for="mesItens" />
+		<p:panelGrid columns="3" style="border:0px;">
+			<p:outputLabel value="Selecione o produto:" />
+			<p:selectOneMenu id="produto"
+				value="#{pedidoBean.item.produto}">
+				<f:selectItem itemLabel="Selecionar" itemValue="" />
+				<f:selectItems value="#{pedidoBean.listProdutos}" var="mark" itemLabel="#{mark.descricao}" />
+			</p:selectOneMenu>
+			<p:message for="produto" styleClass="error" />
+				
+			<p:outputLabel value="Quantidade" />
+			<p:inputText id="qtd" 
+				value="#{pedidoBean.item.quantidade}" required="true"
+				requiredMessage="Quantidade é um campo requerido"/>
+			<p:message for="qtd" styleClass="error" />
+				
+			<p:outputLabel value="Valor do Item" />
+			<p:inputText id="vlrItem" 
+				value="#{pedidoBean.item.vlrItem}" required="true"
+				requiredMessage="Valor do Item é um campo requerido"/>
+			<p:message for="vlrItem" styleClass="error" />
+			
+			<p:outputLabel value="Valor do Desconto" />
+			<p:inputText id="vlrDesc" 
+				value="#{pedidoBean.item.vlrdesc}"
+				validatorMessage="Valor do desconto inválido"/>
+			<p:message for="vlrDesc" styleClass="error" />
+		</p:panelGrid>
+		<center>
+		  <p:commandButton value="Incluir" action="#{pedidoBean.adicionarItem()}" ajax="true" update="formItemPedido" />
+		  <p:commandButton value="Limpar"  action="#{pedidoBean.limparItem()}" immediate="true" process="@this" update="formItemPedido" />
+		</center>			
+    </h:form>
+	</p:dialog>
+	
+	<p:dialog header="Visualizar Itens do Pedido" widgetVar="detalheConsItensPedido" position="center" showEffect="explode" width="950">
+	<h:form id="formConsItemPedido">
+		<p:messages id="mesItenPedido" showDetail="true" autoUpdate="true" closable="true" for="mesItenPedido" />
+		<p:dataTable var="itemPedido" value="#{pedidoBean.operacaoSel.itens}"
+			paginator="true" rows="5" id="table" selection="#{pedidoBean.itemSel}" 
+			rowKey="#{itemPedido.id}" emptyMessage="Sem registros para serem demonstrados">
+			<p:column headerText="Código do Item">
+				<h:outputText value="#{itemPedido.id}" />
+			</p:column>
+			<p:column headerText="Cód.Produto">
+				<h:outputText value="#{itemPedido.produto.codigo}" />
+			</p:column>
+			<p:column headerText="Descrição do Produto">
+				<h:outputText value="#{itemPedido.produto.descricao}" />
+			</p:column>
+			<p:column headerText="Unidade do Produto">
+				<h:outputText value="#{itemPedido.produto.unidade}" />
+			</p:column>
+			<p:column headerText="Tipo de Pagamento">
+				<h:outputText value="#{itemPedido.operacao.tipoPagamento.descricao}" />
+			</p:column>
+			<p:column headerText="Tipo de Operação">
+				<h:outputText value="#{itemPedido.operacao.tipoOperacao.descricao}" />
+			</p:column>
+			<p:column headerText="Status">
+				<h:outputText value="#{itemPedido.operacao.tipoStatus.descricao}" />
+			</p:column>
+			<p:column headerText="Quantidade">
+				<h:outputText value="#{itemPedido.quantidade}" />
+			</p:column>
+			<p:column headerText="Valor do Item">
+				<h:outputText value="#{itemPedido.vlrItem}" />
+			</p:column>
+			<p:column headerText="Valor Desconto">
+				<h:outputText value="#{itemPedido.vlrdesc}" />
+			</p:column>
+			<p:column headerText="Excluir" style="width:5%">
+			<center>
+				<p:commandButton value="Excluir" oncomplete="PF('detalheItemDialog').show();" process="@form" update="formRemoverItem">
+					<f:setPropertyActionListener value="#{itemPedido}" target="#{pedidoBean.itemSel}" />
+				</p:commandButton>
+			</center>
+			</p:column>
+		</p:dataTable>
+    </h:form>
+	</p:dialog>
+	
+	<p:dialog header="Exclusão do Item do Pedido" widgetVar="detalheItemDialog" position="center" showEffect="explode">
+	<h:form id="formRemoverItem">
+		<p:panel header="Confirma a remoção?">
+		<center>
+			<p:commandButton value="Sim" action="#{pedidoBean.excluirItem()}" ajax="true" update="formConsItemPedido" oncomplete="PF('detalheItemDialog').hide()" />
+			<p:commandButton value="Não" oncomplete="PF('detalheItemDialog').hide()" />
+		</center>
+		</p:panel>    
+      </h:form>
+	</p:dialog>
+	
+</ui:define>
+</ui:composition>

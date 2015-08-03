@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="layout.xhtml">
+
+<ui:define name="content">
+	<h:form id="formPedido">
+		<p:messages id="mesPedido" showDetail="true" autoUpdate="true" closable="true" for="mesPedido" />
+		<p:panel header="Consulta de Pedidos">
+			<p:panelGrid columns="3" style="border:0px;">
+				<p:outputLabel value="Data do Pedido" />
+				<p:calendar id="dtPedido" value="#{pedidoBean.operacao.dtOperacao}"  showOn="button"
+				  validatorMessage="Data de nascimento no formato errado dd/MM/yyyy" pattern="dd/MM/yyyy"/>
+				<p:message for="dtPedido" styleClass="error" />
+
+				<p:outputLabel value="Selecione o tipo de Pagamento:"/>
+				<p:selectOneMenu id="tpPagamento" value="#{pedidoBean.operacao.tipoPagamento}"  
+					converter="tipoPagamentoConverter" 
+					validatorMessage="Tipo de Pagamento inválido">
+						<f:selectItem itemLabel="Selecionar" itemValue="" />
+						<f:selectItems value="#{enumeratorsBeanUtil.listTiposPagamentos}" var="tipos" 
+							itemLabel="#{tipos.description}" itemValue="#{tipos.value}" />
+				</p:selectOneMenu>
+				<p:message for="tpPagamento" styleClass="error" />
+				
+ 			</p:panelGrid>
+			<p:commandButton value="Buscar" action="#{pedidoBean.buscar(usuarioBean.usuarioSite.id)}"
+				ajax="true" update="formPedido, formListaPedidos" />
+			<p:commandButton value="Limpar" action="#{pedidoBean.limpar()}" 
+			   immediate="true" process="@this" update="formPedido" />
+		</p:panel>
+	</h:form>
+
+	<h:form id="formListaPedidos">
+	<p:panel header="Listagem das Operações">
+		<p:dataTable var="operacao" value="#{auxListBean.pedidos}"
+			paginator="true" rows="5" id="table" selection="#{pedidoBean.operacaoSel}" 
+			rowKey="#{operacao.id}" emptyMessage="Sem registros para serem demonstrados">
+			<p:column headerText="Data do Pedido">
+				<h:outputText value="#{operacao.dtOperacao}">
+				<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+			<p:column headerText="Nome da Pessoa">
+				<h:outputText value="#{operacao.pessoa.nome}" />
+			</p:column>
+			<p:column headerText="Tipo de Operação">
+				<h:outputText value="#{operacao.tipoOperacao.descricao}" />
+			</p:column>
+			<p:column headerText="Status">
+				<h:outputText value="#{operacao.tipoStatus.descricao}" />
+			</p:column>
+			<p:column headerText="Tipo de Pagamento">
+				<h:outputText value="#{operacao.tipoPagamento.descricao}" />
+			</p:column>
+			<p:column headerText="Imprimir" style="width:5%">
+			<center>
+				<p:commandButton value="Print" icon="ui-icon-document-b" action="#{pedidoBean.imprimirPedido()}"
+				   ajax="false" update="formListaPedidos,formPedido" >
+					<f:setPropertyActionListener value="#{operacao}" target="#{pedidoBean.operacaoSel}" />
+				</p:commandButton>
+			</center>
+			</p:column>
+		</p:dataTable>
+	</p:panel>
+	</h:form>
+	
+</ui:define>
+</ui:composition>

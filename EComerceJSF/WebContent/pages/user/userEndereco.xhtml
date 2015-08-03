@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="layout.xhtml">
+
+<ui:define name="content">
+	<h:form id="formEndereco">
+		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+		<p:panel header="Cadastro / Edição do Endereço">
+			<p:panelGrid columns="3" style="border:0px;">
+
+				<p:outputLabel value="Logradouro/Rua" />
+				<p:inputText id="logradouro" size="45"
+					value="#{enderecoBean.endereco.logradouro}" required="true"
+					requiredMessage="Logradouro/Rua é um campo requerido"
+					validatorMessage="Logradouro/Rua deve conter pelo menos 5 caracteres">
+					<f:validateLength minimum="5" />
+				</p:inputText>
+				<p:message for="logradouro" styleClass="error" />
+					
+				<p:outputLabel value="Número" />
+				<p:inputText id="nro" size="10"
+					value="#{enderecoBean.endereco.numero}" required="true"
+					requiredMessage="Número referente ao endereço é um campo requerido"
+					validatorMessage="Número referente ao endereço deve conter pelo menos 2 caracteres">
+					<f:validateLength minimum="2" />
+				</p:inputText>
+				<p:message for="nro" styleClass="error" />
+	
+				<p:outputLabel value="Bairro" />
+				<p:inputText id="bairro" size="35"
+					value="#{enderecoBean.endereco.bairro}" required="true"
+					requiredMessage="Bairro é um campo requerido"
+					validatorMessage="Bairro deve conter pelo menos 5 caracteres">
+					<f:validateLength minimum="5" />
+				</p:inputText>
+				<p:message for="bairro" styleClass="error" />
+	
+				<p:outputLabel value="Tipo de Endereço:"/>
+				<p:selectOneMenu id="tpEndereco" value="#{enderecoBean.endereco.tipoEndereco}" required="true" 
+					converter="tipoEnderecoConverter" requiredMessage="Deve-se selecionar o tipo de Endereço"
+					validatorMessage="Tipo de Endereço inválido">
+						<f:selectItem itemLabel="Selecionar" itemValue="" />
+						<f:selectItems value="#{enumeratorsBeanUtil.listTiposEnderecos}" var="tipos" 
+							itemLabel="#{tipos.description}" itemValue="#{tipos.value}" />
+				</p:selectOneMenu>
+				<p:message for="tpEndereco" styleClass="error" />
+				
+	
+				<p:outputLabel value="Estado" />
+				<p:inputText id="uf" size="10"
+					value="#{enderecoBean.endereco.estado}" required="true"
+					requiredMessage="Estado é um campo requerido"
+					validatorMessage="Sigla do Estado deve conter 2 caracteres">
+					<f:validateLength minimum="2" />
+				</p:inputText>
+				<p:message for="uf" styleClass="error" />
+	
+				<p:outputLabel value="Cidade" />
+				<p:inputText id="cidade" size="45"
+					value="#{enderecoBean.endereco.cidade}" required="true"
+					requiredMessage="Cidade é um campo requerido"
+					validatorMessage="Cidade deve conter pelo 5 caracteres">
+					<f:validateLength minimum="5" />
+				</p:inputText>
+				<p:message for="cidade" styleClass="error" />
+	
+				<p:outputLabel value="Complemento" />
+				<p:inputText id="complemento" size="45"
+					value="#{enderecoBean.endereco.complemento}">
+				</p:inputText>
+				<p:message for="complemento" styleClass="error" />
+
+			</p:panelGrid>
+			
+			<p:commandButton value="Incluir" action="#{enderecoBean.salvar(usuarioBean.usuarioSite.id)}"
+				ajax="true" update="formEndereco,formListaEndereco" />
+			<p:commandButton value="Alterar" action="#{enderecoBean.alterar(usuarioBean.usuarioSite.id)}"
+				ajax="true" update="formEndereco,formListaEndereco" />
+			<p:commandButton value="Limpar" action="#{enderecoBean.limpar()}" 
+			   immediate="true" process="@this" update="formEndereco" />
+		</p:panel>
+	</h:form>
+
+	<h:form id="formListaEndereco">
+		<p:panel header="Meus Endereços">
+			<p:dataTable var="endereco" value="#{auxListBean.enderecos}" emptyMessage="Sem registros para serem demonstrados"
+				paginator="true" rows="5" id="table" selection="#{enderecoBean.enderecoSel}" 
+				rowKey="#{endereco.id}">
+				<p:column headerText="Código do Endereço">
+					<h:outputText value="#{endereco.id}" />
+				</p:column>
+				<p:column headerText="Pessoa">
+					<h:outputText value="#{endereco.pessoa.nome}" />
+				</p:column>
+				<p:column headerText="Logradouro/Endereço">
+					<h:outputText value="#{endereco.logradouro}" />
+				</p:column>
+				<p:column headerText="Número">
+					<h:outputText value="#{endereco.numero}" />
+				</p:column>
+				<p:column headerText="Bairro">
+					<h:outputText value="#{endereco.bairro}" />
+				</p:column>
+				<p:column headerText="Tipo de Endereço">
+					<h:outputText value="#{endereco.tipoEndereco}" />
+				</p:column>
+				<p:column headerText="UF">
+					<h:outputText value="#{endereco.estado}" />
+				</p:column>
+				<p:column headerText="Cidade">
+					<h:outputText value="#{endereco.cidade}" />
+				</p:column>
+				<p:column headerText="Complemento">
+					<h:outputText value="#{endereco.complemento}" />
+				</p:column>
+				<p:column headerText="Editar" style="width:8%">
+				  <center><p:commandButton action="#{enderecoBean.editar()}" icon="ui-icon-document-b" ajax="true" 
+						process="@form" update="formEndereco">
+						<f:setPropertyActionListener value="#{endereco}" target="#{enderecoBean.enderecoSel}" />
+					</p:commandButton>
+				  </center> 
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+	
+</ui:define>
+</ui:composition>

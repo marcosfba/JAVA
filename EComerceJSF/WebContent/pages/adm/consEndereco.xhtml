@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="layout.xhtml">
+
+<ui:define name="content">
+	<h:form id="formEndereco">
+		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+		<p:panel header="Consulta de Endereços">
+			<p:panelGrid columns="3" style="border:0px;">
+				<p:outputLabel value="Codigo do Endereço" />
+				<p:inputText id="userId" value="#{enderecoBean.endereco.id}"/>
+				<p:message for="userId" styleClass="error" />
+				
+				<p:outputLabel value="Tipo de Endereço:"/>
+				<p:selectOneMenu id="tpEndereco" value="#{enderecoBean.endereco.tipoEndereco}"  
+					converter="tipoEnderecoConverter">
+						<f:selectItem itemLabel="Selecionar" itemValue="" />
+						<f:selectItems value="#{enumeratorsBeanUtil.listTiposEnderecos}" var="tipos" 
+							itemLabel="#{tipos.description}" itemValue="#{tipos.value}" />
+				</p:selectOneMenu>
+				<p:message for="tpEndereco" styleClass="error" />
+
+				<p:outputLabel value="Estado" />
+				<p:inputText id="uf"
+					value="#{enderecoBean.endereco.estado}" validatorMessage="Sigla do Estado deve conter 2 caracteres">
+					<f:validateLength minimum="2" />
+				</p:inputText>
+				<p:message for="uf" styleClass="error" />
+	
+				<p:outputLabel value="Cidade" />
+				<p:inputText id="cidade" value="#{enderecoBean.endereco.cidade}" size="30"/> 
+				<p:message for="cidade" styleClass="error" />
+			</p:panelGrid>
+			
+			<p:commandButton value="Novo" action="#{enderecoBean.limpar()}" ajax="true" update="formEndereco,formListaEndereco" />
+			<p:commandButton value="Buscar" action="#{enderecoBean.buscar()}" ajax="true" update="formListaEndereco" />
+		</p:panel>
+	</h:form>
+
+	<h:form id="formListaEndereco">
+		<p:panel header="Listagem dos Endereços">
+			<p:dataTable var="endereco" value="#{enderecoBean.listaEndereco}" emptyMessage="Sem registros para serem demonstrados"
+				paginator="true" rows="5" id="table" selection="#{enderecoBean.enderecoSel}" 
+				rowKey="#{endereco.id}">
+				<p:column headerText="Código do Endereço">
+					<h:outputText value="#{endereco.id}" />
+				</p:column>
+				<p:column headerText="Pessoa">
+					<h:outputText value="#{endereco.pessoa.nome}" />
+				</p:column>
+				<p:column headerText="Logradouro/Endereço">
+					<h:outputText value="#{endereco.logradouro}" />
+				</p:column>
+				<p:column headerText="Número">
+					<h:outputText value="#{endereco.numero}" />
+				</p:column>
+				<p:column headerText="Bairro">
+					<h:outputText value="#{endereco.bairro}" />
+				</p:column>
+				<p:column headerText="Tipo de Endereço">
+					<h:outputText value="#{endereco.tipoEndereco}" />
+				</p:column>
+				<p:column headerText="UF">
+					<h:outputText value="#{endereco.estado}" />
+				</p:column>
+				<p:column headerText="Cidade">
+					<h:outputText value="#{endereco.cidade}" />
+				</p:column>
+				<p:column headerText="Complemento">
+					<h:outputText value="#{endereco.complemento}" />
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+	
+</ui:define>
+</ui:composition>

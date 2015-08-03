@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="layout.xhtml">
+
+<ui:define name="content">
+	<h:form id="formUsuario">
+		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+		<p:panel header="Meu Usuário">
+			<p:panelGrid columns="3" style="border:0px;">
+				<p:outputLabel value="Nome do usuário" />
+				<p:inputText id="username" size="45"
+					value="#{usuarioBean.usuarioSite.userName}" required="true"
+					requiredMessage="Nome para acesso é requerido"
+					validatorMessage="Nome para acesso deve conter pelo menos 8 caracteres">
+					<f:validateLength minimum="8" />
+				</p:inputText>
+				<p:message for="username" styleClass="error" />
+				
+				<p:outputLabel value="Email do usuário" />
+				<p:inputText id="email" size="45"
+					value="#{usuarioBean.usuarioSite.email}" required="true"
+					requiredMessage="Email para uma eventual recuperação da senha é requerido"
+					validatorMessage="Email deve conter pelo menos 8 caracteres">
+					<f:validateLength minimum="8" />
+				</p:inputText>
+				<p:message for="email" styleClass="error" />
+				
+				
+				<p:outputLabel value="Sua senha" />
+				<p:password id="descSenha" value="#{usuarioBean.usuarioSite.password}" feedback="true"
+                    promptLabel="Intensidade da senha" weakLabel="Senha fraca"
+                    goodLabel="Senha muito boa" strongLabel="Senha forte" required="true"
+                    validatorMessage="Senha está muito curta">
+					<f:validateLength minimum="8" />
+				</p:password>
+				<p:message for="descSenha" styleClass="error" />
+								
+			</p:panelGrid>
+			
+			<p:commandButton value="Alterar" action="#{usuarioBean.alterar(usuarioBean.usuarioSite.id)}"
+				ajax="true" update="formUsuario" />
+		</p:panel>
+	</h:form>
+
+</ui:define>
+</ui:composition>

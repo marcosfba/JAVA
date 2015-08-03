@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>E-COMMERCE- FRAMEWORK WEB02</title>
+	<style>
+		.ui-layout-container {
+			width: 1366px;
+			height: 768px;
+			border: none !important;
+		}
+		.ui-widget, .ui-widget .ui-widget {    
+ 		   font-size: 93% !important;
+		} 
+		</style>
+</h:head>
+<h:body>
+	<p:layout style="min-width:1366px;min-height:768px;margin:0 auto;border:0px;height:100%;">
+		<p:layoutUnit position="north" style="border:0px;bottom:0">
+		    <img src="../images/banner.png" width="100%" />
+		    <p:panel header="Seja muito bem vindo: #{usuarioBean.usuarioSite.email}" collapsed="false" style="text-align:right;border:0px;"/>
+		</p:layoutUnit>
+		<p:layoutUnit position="west" header="Menu de Opções" style="text-align:center;border:0px;">
+			<h:form id="menuOpcoes">	
+			<p:menu toggleable="true">
+				<p:submenu label="Produtos">
+					<p:menuitem value="Catalogo" action="#{menuBean.userLogadoIndex()}" icon="ui-icon-disk" />
+				</p:submenu>
+				<p:submenu label="Busca Refinada">
+					<p:menuitem value="Produtos" action="#{menuBean.userLogadoProdFiltro()}" icon="ui-icon-disk" />
+				</p:submenu>
+				<p:submenu label="Pedido">
+				    <p:menuitem value="Visualizar Carrinho" action="#{menuBean.userLogadoCarrinho()}"  icon="ui-icon-disk" />
+					<p:menuitem value="Fechamento" action="#{menuBean.userLogadoFechamento()}" icon="ui-icon-disk" />
+				</p:submenu>
+				<p:submenu label="Acesso">
+					<p:menuitem value="Meu usuário" action="#{auxProdutoBean.visualizarUsuario(usuarioBean.usuarioSite.id)}"   icon="ui-icon-disk" />
+				</p:submenu>
+				<p:submenu label="Pessoa">
+					<p:menuitem value="Meus contatos"  action="#{auxProdutoBean.visualizarContatosUsuario(usuarioBean.usuarioSite.id)}"   icon="ui-icon-disk" />
+					<p:menuitem value="Meus telefones" action="#{auxProdutoBean.visualizarTelefonesUsuario(usuarioBean.usuarioSite.id)}"  icon="ui-icon-disk" />
+					<p:menuitem value="Meus endereços" action="#{auxProdutoBean.visualizarEnderecosUsuario(usuarioBean.usuarioSite.id)}"  icon="ui-icon-disk" />
+					<p:menuitem value="Meus cadastro"  action="#{auxProdutoBean.visualizarCadastroUsuario(usuarioBean.usuarioSite.id)}"  icon="ui-icon-disk" />					
+				</p:submenu>
+				<p:submenu label="Pedidos">
+					<p:menuitem value="Meus pedidos" action="#{auxProdutoBean.visualizarPedidosUsuario(usuarioBean.usuarioSite.id)}"  icon="ui-icon-disk" />
+				</p:submenu>
+				<p:submenu label="Log-Off">
+					<p:menuitem value="Sair do Sistema" action="#{usuarioBean.logOff()}" icon="ui-icon-disk" />
+				</p:submenu>
+			</p:menu>
+			</h:form>
+		</p:layoutUnit>
+		<p:layoutUnit position="center" style="border:0px;">
+			<ui:insert name="content"></ui:insert>
+		</p:layoutUnit>
+	</p:layout>
+</h:body>
+</html>

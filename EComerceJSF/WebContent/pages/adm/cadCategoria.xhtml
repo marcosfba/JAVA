@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="layout.xhtml">
+
+<ui:define name="content">
+	<h:form id="formCategoria">
+		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+		<p:panel header="Cadastro / Edição da Categoria">
+			<p:panelGrid columns="3" style="border:0px;">
+				<p:outputLabel value="Codigo da Categoria" />
+				<p:inputText id="userId" value="#{categoriaBean.categoria.id}"
+					readonly="true" />
+				<br />
+
+				<p:outputLabel value="Descrição da Categoria" />
+				<p:inputText id="descricao" size="35"
+					value="#{categoriaBean.categoria.descricao}" required="true"
+					requiredMessage="Descrição da Categoria é um campo requerido"
+					validatorMessage="Descrição da Categoria deve conter pelo menos 5 caracteres">
+					<f:validateLength minimum="5" />
+				</p:inputText>
+				<p:message for="descricao" styleClass="error" />
+				
+				<p:outputLabel value="Complemento" />
+				<p:inputText id="complemento" size="35"
+					value="#{categoriaBean.categoria.complemento}" required="true"
+					requiredMessage="Complemento da Categoria é um campo requerido"
+					validatorMessage="Complemento da Categoria deve conter pelo menos 5 caracteres">
+					<f:validateLength minimum="5" />
+				</p:inputText>
+				<p:message for="complemento" styleClass="error" />				
+			</p:panelGrid>
+			
+			<p:commandButton value="Incluir" action="#{categoriaBean.salvar()}" ajax="true" update="formCategoria,formListaCategoria" />
+			<p:commandButton value="Alterar" action="#{categoriaBean.alterar()}" ajax="true" update="formCategoria,formListaCategoria" />
+			<p:commandButton value="Limpar" update="formCategoria" action="#{categoriaBean.limpar()}" immediate="true" process="@this"/>
+		</p:panel>
+	</h:form>
+
+	<h:form id="formListaCategoria">
+		<p:panel header="Listagem das Categorias">
+			<p:dataTable var="categoria" value="#{categoriaBean.listaCategoria}"
+				paginator="true" rows="5" id="table" selection="#{categoriaBean.categoriaSel}" rowKey="#{categoria.id}"
+				emptyMessage="Sem registros para serem demonstrados">
+				<p:column headerText="Código da Categoria">
+					<h:outputText value="#{categoria.id}" />
+				</p:column>
+				<p:column headerText="Descrição da Categoria">
+					<h:outputText value="#{categoria.descricao}" />
+				</p:column>
+				<p:column headerText="Complemento da Categoria">
+					<h:outputText value="#{categoria.complemento}" />
+				</p:column>
+				<p:column headerText="Editar" style="width:8%">
+				  <center><p:commandButton action="#{categoriaBean.editar()}" icon="ui-icon-document-b" ajax="true" 
+						process="@form" update="formCategoria">
+						<f:setPropertyActionListener value="#{categoria}" target="#{categoriaBean.categoriaSel}" />
+					</p:commandButton>
+				  </center> 
+				</p:column>
+				<p:column headerText="Excluir" style="width:8%">
+					<center><p:commandButton value="Excluir" oncomplete="PF('detalheDialog').show();" process="@form" update="formRemover">
+						<f:setPropertyActionListener value="#{categoria}" target="#{categoriaBean.categoriaSel}" />
+					</p:commandButton>
+					</center>
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+	
+	<p:dialog header="Excluir Categoria" widgetVar="detalheDialog" position="center" showEffect="explode">
+	<h:form id="formRemover">
+		<p:panel header="Confirma a remoção?">
+		<center>
+			<p:commandButton value="Sim" action="#{categoriaBean.excluir()}" ajax="true" update="formCategoria,formListaCategoria" oncomplete="PF('detalheDialog').hide()" />
+			<p:commandButton value="Não" action="#{categoriaBean.limpar()}" ajax="true" update="formCategoria,formListaCategoria" oncomplete="PF('detalheDialog').hide()" />
+		</center>
+		</p:panel>    
+      </h:form>
+	</p:dialog>
+			
+</ui:define>
+</ui:composition>

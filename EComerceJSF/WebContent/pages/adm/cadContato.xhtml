@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="layout.xhtml">
+
+<ui:define name="content">
+	<h:form id="formContato">
+		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+		<p:panel header="Cadastro / Edição da Contato">
+			<p:panelGrid columns="3" style="border:0px;">
+				<p:outputLabel value="Codigo da Contato" />
+				<p:inputText id="userId" value="#{contatoBean.contato.id}"
+					readonly="true" />
+				<br />
+
+				<p:outputLabel value="Selecione a pessoa:" />
+				<p:selectOneMenu id="idPessoa"
+					value="#{contatoBean.contato.pessoa}" required="true"
+					requiredMessage="A pessoa  não pode deixar de ser selecionada">
+					<f:selectItem itemLabel="Selecionar" itemValue="" />
+					<f:selectItems value="#{contatoBean.listaPessoas}" var="mark"
+						itemLabel="#{mark.nome}" />
+				</p:selectOneMenu>
+				<p:message for="idPessoa" styleClass="error" />
+
+				<p:outputLabel value="Tipo de Contato:"/>
+				<p:selectOneMenu id="tipoContatoSel" value="#{contatoBean.contato.tipoContato}" required="true" 
+					converter="tipoContatoConverter" requiredMessage="Deve-se selecionar o tipo de Contato"
+					validatorMessage="Tipo de Contato inválido">
+						<f:selectItem itemLabel="Selecionar" itemValue="" />
+						<f:selectItems value="#{enumeratorsBeanUtil.listTiposContatos}" var="tipo" 
+							itemLabel="#{tipo.description}" itemValue="#{tipo.value}" />
+				</p:selectOneMenu>
+				<p:message for="tipoContatoSel" styleClass="error" />
+	
+				<p:outputLabel value="Descrição do contato" />
+				<p:inputText id="descContato" size="45"
+					value="#{contatoBean.contato.email}" required="true"
+					equiredMessage="Descrição do contato é um campo requerido">
+				</p:inputText>
+				<p:message for="descContato" styleClass="error" />				
+			</p:panelGrid>
+			
+			<p:commandButton value="Incluir" action="#{contatoBean.salvar()}"
+				ajax="true" update="formContato,formListaContato" />
+			<p:commandButton value="Alterar" action="#{contatoBean.alterar()}"
+				ajax="true" update="formContato,formListaContato" />
+			<p:commandButton value="Limpar" action="#{contatoBean.limpar()}" 
+			   immediate="true" process="@this" update="formContato" />
+		</p:panel>
+	</h:form>
+
+	<h:form id="formListaContato">
+		<p:panel header="Listagem das Contatos">
+			<p:dataTable var="contato" value="#{contatoBean.listaContato}" emptyMessage="Sem registros para serem demonstrados"
+				paginator="true" rows="5" id="table" selection="#{contatoBean.contatoSel}" rowKey="#{contato.id}">
+				<p:column headerText="Código do Contato">
+					<h:outputText value="#{contato.id}" />
+				</p:column>
+				<p:column headerText="Pessoa">
+					<h:outputText value="#{contato.pessoa.nome}" />
+				</p:column>
+				<p:column headerText="Descrição da Contato">
+					<h:outputText value="#{contato.email}" />
+				</p:column>
+				<p:column headerText="Tipo de Contato">
+					<h:outputText value="#{contato.tipoContato}" />
+				</p:column>
+				<p:column headerText="Editar" style="width:8%">
+				  <center><p:commandButton action="#{contatoBean.editar()}" icon="ui-icon-document-b" ajax="true" 
+						process="@form" update="formContato">
+						<f:setPropertyActionListener value="#{contato}" target="#{contatoBean.contatoSel}" />
+					</p:commandButton>
+				  </center> 
+				</p:column>
+				<p:column headerText="Excluir" style="width:8%">
+					<center><p:commandButton value="Excluir" oncomplete="PF('detalheDialog').show();" process="@form" update="formRemover">
+						<f:setPropertyActionListener value="#{contato}" target="#{contatoBean.contatoSel}" />
+					</p:commandButton>
+					</center>
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+	
+	<p:dialog header="Excluir Contato" widgetVar="detalheDialog" position="center" showEffect="explode">
+	<h:form id="formRemover">
+		<p:panel header="Confirma a remoção?">
+		<center>
+			<p:commandButton value="Sim" action="#{contatoBean.excluir()}" ajax="true" update="formContato,formListaContato" oncomplete="PF('detalheDialog').hide()" />
+			<p:commandButton value="Não" action="#{contatoBean.limpar()}" ajax="true" update="formContato,formListaContato" oncomplete="PF('detalheDialog').hide()" />
+		</center>
+		</p:panel>    
+      </h:form>
+	</p:dialog>
+	
+</ui:define>
+</ui:composition>

@@ -1,0 +1,450 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="layout.xhtml">
+
+<ui:define name="content">
+	<h:form id="formCliente">
+		<p:messages id="mesCliente" showDetail="true" autoUpdate="true" closable="true" for="mesCliente" />
+		<p:panel header="Cadastro / Edição do Cliente">
+			<p:panelGrid columns="3" style="border:0px;">
+				<p:outputLabel value="Codigo" />
+				<p:inputText id="userId" value="#{clienteBean.cliente.id}"
+					readonly="true" />
+				<br />
+
+				<p:outputLabel value="Nome" />
+				<p:inputText id="descricao" size="50"
+					value="#{clienteBean.cliente.nome}" required="true"
+					requiredMessage="Nome do Cliente é um campo requerido"
+					validatorMessage="Nome do Cliente deve conter pelo menos 5 caracteres">
+					<f:validateLength minimum="5" />
+				</p:inputText>
+				<p:message for="descricao" styleClass="error" />
+				
+				<p:outputLabel value="Tipo :"/>
+				<p:selectOneRadio id="tipo" value="#{clienteBean.cliente.tipoPessoa}">
+            		<f:selectItem itemLabel="Pessoa Fisica" itemValue="0" />
+            		<f:selectItem itemLabel="Pessoa Juridica" itemValue="1" />
+		        </p:selectOneRadio>
+				<p:message for="tipo" styleClass="error" />
+
+				<p:outputLabel value="Data de Nascimento" />
+				<p:calendar id="dtNascimento" value="#{clienteBean.cliente.dtNascimento}"  showOn="button"
+				  validatorMessage="Data de nascimento no formato errado dd/MM/yyyy" pattern="dd/MM/yyyy"/>
+				<p:message for="dtNascimento" styleClass="error" />
+				
+				<p:outputLabel value="CPF" />
+				<p:inputText id="cpf" size="25"
+					value="#{clienteBean.cliente.cpf}" required="true"
+					requiredMessage="CPF do Cliente é um campo requerido"
+					validatorMessage="CPF do Cliente deve conter 11 caracteres">
+					<f:validateLength minimum="11" />
+				</p:inputText>
+				<p:message for="cpf" styleClass="error" />
+			
+				<p:outputLabel value="Identidade" />
+				<p:inputText id="rg" size="30"
+					value="#{clienteBean.cliente.identidade}" required="true"
+					requiredMessage="Identidade do Cliente é um campo requerido">
+				</p:inputText>
+				<p:message for="rg" styleClass="error" />
+			
+				<p:outputLabel value="Titulo de Eleitor" />
+				<p:inputText id="titulo" value="#{clienteBean.cliente.titEleitor}" required="true" size="30"
+					requiredMessage="Nº do Título de Eleitor é um campo requerido">
+				</p:inputText>
+				<p:message for="titulo" styleClass="error" />
+				
+				<p:outputLabel value="Carteira de Habilitação" />
+				<p:inputText id="cnh" value="#{clienteBean.cliente.cnh}" required="true" size="30"
+					requiredMessage="Carteira de Habilitação é um campo requerido">
+				</p:inputText>
+				<p:message for="cnh" styleClass="error" />
+
+				<p:outputLabel value="Observação" />
+				<p:inputTextarea id="observacao" value="#{clienteBean.cliente.observacao}" rows="10" cols="50" />
+				<p:message for="observacao" styleClass="error" />
+
+				<p:outputLabel value="Telefones" />
+				<p:commandButton value="Adicionar Telefone" oncomplete="PF('detalheTelefone').show();" immediate="true" ajax="true" update="formTelefone">
+					<f:setPropertyActionListener value="#{clienteBean.telefone}" target="#{clienteBean.telefone}" />
+				</p:commandButton>
+				<br />
+								
+ 				<p:outputLabel value="Enderecos" />
+					<p:commandButton value="Adicionar Endereço" oncomplete="PF('detalheEndereco').show();" immediate="true" ajax="true" update="formEndereco">
+						<f:setPropertyActionListener value="#{clienteBean.endereco}" target="#{clienteBean.endereco}" />
+					</p:commandButton>
+				<br />
+
+				<p:outputLabel value="Contatos" />
+					<p:commandButton value="Adicionar Contato" oncomplete="PF('detalheContato').show();" immediate="true" ajax="true" update="formContato">
+						<f:setPropertyActionListener value="#{clienteBean.contato}" target="#{clienteBean.contato}" />
+					</p:commandButton>
+				<br />
+
+				<p:outputLabel value="Usuário" />
+					<p:commandButton value="Adicionar Usuário" oncomplete="PF('detalheUsuario').show();" immediate="true" ajax="true" update="formUsuario">
+						<f:setPropertyActionListener value="#{clienteBean.usuario}" target="#{clienteBean.usuario}" />
+					</p:commandButton>
+				<br />
+  		    </p:panelGrid>
+			
+			<p:commandButton value="Incluir" action="#{clienteBean.salvar()}"
+				ajax="true" update="formCliente,formListaCliente" />
+			<p:commandButton value="Alterar" action="#{clienteBean.alterar()}"
+				ajax="true" update="formCliente,formListaCliente" />
+			<p:commandButton value="Limpar" update="formCliente" action="#{clienteBean.limpar()}" immediate="true" process="@this"/>
+		</p:panel>
+	</h:form>
+
+	<h:form id="formListaCliente">
+		<p:panel header="Listagem dos clientes">
+			<p:dataTable var="cliente" value="#{clienteBean.listaCliente}"
+				paginator="true" rows="5" id="table" selection="#{clienteBean.clienteSel}" 
+				rowKey="#{cliente.id}" emptyMessage="Sem registros para serem demonstrados">
+				<p:column headerText="Código da Cliente">
+					<h:outputText value="#{cliente.id}" />
+				</p:column>
+				<p:column headerText="Nome do Cliente">
+					<h:outputText value="#{cliente.nome}" />
+				</p:column>
+				<p:column headerText="CPF do Cliente">
+					<h:outputText value="#{cliente.cpf}" />
+				</p:column>
+				<p:column headerText="Identidade">
+					<h:outputText value="#{cliente.identidade}" />
+				</p:column>
+				<p:column headerText="Titulo de Eleitor">
+					<h:outputText value="#{cliente.titEleitor}" />
+				</p:column>
+				<p:column headerText="CNH">
+					<h:outputText value="#{cliente.cnh}" />
+				</p:column>
+				<p:column headerText="Data de Nascimento">
+					<h:outputText value="#{cliente.dtNascimento}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Telefones" style="width:5%">
+				<center>
+					<p:commandButton value="View" icon="ui-icon-document-b" oncomplete="PF('detalheConsTelefone').show();" process="@form" update=":formConsTelefone">
+						<f:setPropertyActionListener value="#{cliente}" target="#{clienteBean.clienteSel}" />
+					</p:commandButton>
+				</center>
+				</p:column>
+				<p:column headerText="Endereços" style="width:5%">
+				<center>
+					<p:commandButton value="View" icon="ui-icon-document-b" oncomplete="PF('detalheConsEndereco').show();" process="@form" update=":formConsEnderecos">
+						<f:setPropertyActionListener value="#{cliente}" target="#{clienteBean.clienteSel}" />
+					</p:commandButton>
+				</center>
+				</p:column>
+				<p:column headerText="Contatos" style="width:5%">
+				<center>
+					<p:commandButton value="View" icon="ui-icon-document-b" oncomplete="PF('detalheConsContato').show();" process="@form" update=":formConsContatos">
+						<f:setPropertyActionListener value="#{cliente}" target="#{clienteBean.clienteSel}" />
+					</p:commandButton>
+				</center>
+				</p:column>
+				<p:column headerText="Usuario" style="width:5%">
+				<center>
+					<p:commandButton value="View" icon="ui-icon-document-b" oncomplete="PF('detalheConsUsuario').show();" process="@form" update=":formConsUsuario">
+						<f:setPropertyActionListener value="#{cliente}" target="#{clienteBean.clienteSel}" />
+					</p:commandButton>
+				</center>
+				</p:column>
+				<p:column headerText="Editar" style="width:5%">
+				  <center><p:commandButton action="#{clienteBean.editar()}" icon="ui-icon-document-b" ajax="true" process="@form" update="formCliente">
+						<f:setPropertyActionListener value="#{cliente}" target="#{clienteBean.clienteSel}" />
+					</p:commandButton>
+				  </center> 
+				</p:column>
+				<p:column headerText="Excluir" style="width:5%">
+				<center>
+					<p:commandButton value="Excluir" oncomplete="PF('detalheDialog').show();" process="@form" update="formRemover">
+						<f:setPropertyActionListener value="#{cliente}" target="#{clienteBean.clienteSel}" />
+					</p:commandButton>
+				</center>
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+	
+	<p:dialog header="Exclusão do Cliente" widgetVar="detalheDialog" position="center" showEffect="explode">
+	<h:form id="formRemover">
+		<p:panel header="Confirma a remoção?">
+		<center>
+			<p:commandButton value="Sim" action="#{clienteBean.excluir()}" ajax="true" update="formCliente,formListaCliente" oncomplete="PF('detalheDialog').hide()" />
+			<p:commandButton value="Não" action="#{clienteBean.limpar()}" ajax="true" update="formCliente,formListaCliente" oncomplete="PF('detalheDialog').hide()" />
+		</center>
+		</p:panel>    
+      </h:form>
+	</p:dialog>
+	
+	<p:dialog header="Inclusão de Telefones" widgetVar="detalheTelefone" position="center" showEffect="explode">
+	<h:form id="formTelefone">
+	    <p:messages id="mesTelefone" showDetail="true" autoUpdate="true" closable="true" for="mesTelefone" />
+		<p:panelGrid columns="3" style="border:0px;">
+			<p:outputLabel value="Nº do Telefone" />
+			<p:inputText id="numero" size="15"
+				value="#{clienteBean.telefone.numeroTelefone}" required="true"
+				requiredMessage="Número do Telefone é um campo requerido"
+				validatorMessage="Número do Telefone deve conter pelo menos 8 caracteres">
+				<f:validateLength minimum="8" />
+			</p:inputText>
+			<p:message for="numero" styleClass="error" />
+				
+			<p:outputLabel value="Tipo de Telefone:"/>
+			<p:selectOneMenu id="tpTelefone" value="#{clienteBean.telefone.tipoTelefone}" required="true" 
+				converter="tipoTelefoneConverter" requiredMessage="Deve-se selecionar o tipo de Telefone"
+				validatorMessage="Tipo de Telefone inválido">
+					<f:selectItem itemLabel="Selecionar" itemValue="" />
+					<f:selectItems value="#{enumeratorsBeanUtil.listTiposTelefones}" var="tipos" 
+						itemLabel="#{tipos.description}" itemValue="#{tipos.value}" />
+			</p:selectOneMenu>
+			<p:message for="tpTelefone" styleClass="error" />
+		</p:panelGrid>
+		<center>
+		  <p:commandButton value="Incluir" action="#{clienteBean.adicionarTelefone()}" ajax="true" update="formTelefone" />
+		  <p:commandButton value="Limpar"  action="#{clienteBean.limparTelefone()}" immediate="true" process="@this" update="formTelefone" />
+		</center>			
+    </h:form>
+	</p:dialog>
+	
+ 	<p:dialog header="Inclusão de Endereços" widgetVar="detalheEndereco" position="center" showEffect="explode">
+	<h:form id="formEndereco">
+	    <p:messages id="mesEndereco" showDetail="true" autoUpdate="true" closable="true" for="mesEndereco" />
+		<p:panelGrid columns="3" style="border:0px;">
+		
+			<p:outputLabel value="Logradouro/Rua" />
+			<p:inputText id="logradouro" size="40"
+				value="#{clienteBean.endereco.logradouro}" required="true"
+				requiredMessage="Logradouro/Rua é um campo requerido"
+				validatorMessage="Logradouro/Rua deve conter pelo menos 5 caracteres">
+				<f:validateLength minimum="5" />
+			</p:inputText>
+			<p:message for="logradouro" styleClass="error" />
+				
+			<p:outputLabel value="Número" />
+			<p:inputText id="nro" size="10"
+				value="#{clienteBean.endereco.numero}" required="true"
+				requiredMessage="Número referente ao endereço é um campo requerido"
+				validatorMessage="Número referente ao endereço deve conter pelo menos 2 caracteres">
+				<f:validateLength minimum="2" />
+			</p:inputText>
+			<p:message for="nro" styleClass="error" />
+
+			<p:outputLabel value="Bairro" />
+			<p:inputText id="bairro" size="35"
+				value="#{clienteBean.endereco.bairro}" required="true"
+				requiredMessage="Bairro é um campo requerido"
+				validatorMessage="Bairro deve conter pelo menos 5 caracteres">
+				<f:validateLength minimum="5" />
+			</p:inputText>
+			<p:message for="bairro" styleClass="error" />
+
+			<p:outputLabel value="Tipo de Endereço:"/>
+			<p:selectOneMenu id="tpEndereco" value="#{clienteBean.endereco.tipoEndereco}" required="true" 
+				converter="tipoEnderecoConverter" requiredMessage="Deve-se selecionar o tipo de Endereço"
+				validatorMessage="Tipo de Endereço inválido">
+					<f:selectItem itemLabel="Selecionar" itemValue="" />
+					<f:selectItems value="#{enumeratorsBeanUtil.listTiposEnderecos}" var="tipos" 
+						itemLabel="#{tipos.description}" itemValue="#{tipos.value}" />
+			</p:selectOneMenu>
+			<p:message for="tpEndereco" styleClass="error" />
+			
+
+			<p:outputLabel value="Estado" />
+			<p:inputText id="uf" size="10"
+				value="#{clienteBean.endereco.estado}" required="true"
+				requiredMessage="Estado é um campo requerido"
+				validatorMessage="Sigla do Estado deve conter 2 caracteres">
+				<f:validateLength minimum="2" />
+			</p:inputText>
+			<p:message for="uf" styleClass="error" />
+
+			<p:outputLabel value="Cidade" />
+			<p:inputText id="cidade" size="35"
+				value="#{clienteBean.endereco.cidade}" required="true"
+				requiredMessage="Cidade é um campo requerido"
+				validatorMessage="Cidade deve conter pelo 5 caracteres">
+				<f:validateLength minimum="5" />
+			</p:inputText>
+			<p:message for="cidade" styleClass="error" />
+
+			<p:outputLabel value="Complemento" />
+			<p:inputText id="complemento" size="30"
+				value="#{clienteBean.endereco.complemento}">
+			</p:inputText>
+			<p:message for="complemento" styleClass="error" />
+		</p:panelGrid>
+		<center>
+		  <p:commandButton value="Incluir" action="#{clienteBean.adicionarEndereco()}" ajax="true" update="formEndereco" />
+		  <p:commandButton value="Limpar"  action="#{clienteBean.limparEndereco()}" immediate="true" process="@this" update="formEndereco" />
+		</center>			
+    </h:form>
+	</p:dialog>
+
+	<p:dialog header="Inclusão de Contatos" widgetVar="detalheContato" position="center" showEffect="explode">
+	<h:form id="formContato">
+	    <p:messages id="mesContato" showDetail="true" autoUpdate="true" closable="true" for="mesContato" />
+		<p:panelGrid columns="3" style="border:0px;">
+		
+			<p:outputLabel value="Tipo de Contato:"/>
+			<p:selectOneMenu id="tipoContatoSel" value="#{clienteBean.contato.tipoContato}" required="true" 
+				converter="tipoContatoConverter" requiredMessage="Deve-se selecionar o tipo de Contato"
+				validatorMessage="Tipo de Contato inválido">
+					<f:selectItem itemLabel="Selecionar" itemValue="" />
+					<f:selectItems value="#{enumeratorsBeanUtil.listTiposContatos}" var="tipo" 
+						itemLabel="#{tipo.description}" itemValue="#{tipo.value}" />
+			</p:selectOneMenu>
+			<p:message for="tipoContatoSel" styleClass="error" />
+
+			<p:outputLabel value="Descrição do contato" />
+			<p:inputText id="descContato" size="35"
+				value="#{clienteBean.contato.email}" required="true"
+				equiredMessage="Descrição do contato é um campo requerido">
+			</p:inputText>
+			<p:message for="descContato" styleClass="error" />				
+		</p:panelGrid>
+		<center>
+		  <p:commandButton value="Incluir" action="#{clienteBean.adicionarContato()}" ajax="true" update="formContato" />
+		  <p:commandButton value="Limpar"  action="#{clienteBean.limparContato()}" immediate="true" process="@this" update="formContato" />
+		</center>			
+	</h:form>
+	</p:dialog>
+
+ 	<p:dialog header="Inclusão de Usuário" widgetVar="detalheUsuario" position="center" showEffect="explode">
+	<h:form id="formUsuario">
+		<p:messages id="mesUsuario" showDetail="true" autoUpdate="true" closable="true" for="mesUsuario" />
+		<p:panelGrid columns="3" style="border:0px;">
+			<p:outputLabel value="Nome do usuário" />
+			<p:inputText id="username" size="35"
+				value="#{clienteBean.usuario.userName}" required="true"
+				requiredMessage="Nome para acesso é requerido"
+				validatorMessage="Nome para acesso deve conter pelo menos 8 caracteres">
+				<f:validateLength minimum="8" />
+			</p:inputText>
+			<p:message for="username" styleClass="error" />
+				
+			<p:outputLabel value="Email do usuário" />
+			<p:inputText id="email" size="35"
+				value="#{clienteBean.usuario.email}" required="true"
+				requiredMessage="Email para uma eventual recuperação da senha é requerido"
+				validatorMessage="Email deve conter pelo menos 8 caracteres">
+				<f:validateLength minimum="8" />
+			</p:inputText>
+			<p:message for="email" styleClass="error" />
+				
+			<p:outputLabel value="Sua senha" />
+			<p:password id="descSenha" value="#{clienteBean.usuario.password}" feedback="true"
+                   promptLabel="Intensidade da senha" weakLabel="Senha fraca"
+                   goodLabel="Senha muito boa" strongLabel="Senha forte" required="true"
+                   validatorMessage="Senha está muito curta">
+				<f:validateLength minimum="8" />
+			</p:password>
+			<p:message for="descSenha" styleClass="error" />
+
+			<p:outputLabel value="Tipo de Usuário:"/>
+			<p:selectOneMenu id="tpUsuario" value="#{clienteBean.usuario.tipoUsuario}" required="true" 
+				converter="tipoUsuarioConverter" requiredMessage="Deve-se selecionar o tipo de Usuário"
+				validatorMessage="Tipo de Usuário inválido">
+					<f:selectItem itemLabel="Selecionar" itemValue="" />
+					<f:selectItems value="#{enumeratorsBeanUtil.listTiposUsuarios}" var="tipos" 
+						itemLabel="#{tipos.description}" itemValue="#{tipos.value}" />
+			</p:selectOneMenu>
+			<p:message for="tpUsuario" styleClass="error" />
+								
+		</p:panelGrid>
+		<center>
+		  <p:commandButton value="Incluir" action="#{clienteBean.adicionarUsuario()}" oncomplete="PF('detalheUsuario').hide()"/>
+		</center>			
+    </h:form>
+	</p:dialog>
+	
+	<p:dialog header="Visualizar Telefones" widgetVar="detalheConsTelefone" position="center" showEffect="explode" width="600">
+	<h:form id="formConsTelefone">
+		<p:dataTable var="telefone" value="#{clienteBean.clienteSel.listaTelefones}" emptyMessage="Sem registros para serem visualizados"
+			paginator="true" rows="5" id="table" rowKey="#{telefone.id}">
+			<p:column headerText="Código do Telefone">
+				<h:outputText value="#{telefone.id}" />
+			</p:column>
+			<p:column headerText="Nº do Telefone">
+				<h:outputText value="#{telefone.numeroTelefone}" />
+			</p:column>
+			<p:column headerText="Descrição Tipo Telefone">
+				<h:outputText value="#{telefone.tipoTelefone}" />
+			</p:column>
+		</p:dataTable>
+    </h:form>
+	</p:dialog>
+	
+	<p:dialog header="Visualizar Endereços" widgetVar="detalheConsEndereco" position="center" showEffect="explode" width="800">
+	<h:form id="formConsEnderecos">
+		<p:dataTable var="endereco" value="#{clienteBean.clienteSel.listaEnderecos}" emptyMessage="Sem registros para serem visualizados"
+			paginator="true" rows="5" id="table" rowKey="#{endereco.id}">
+			<p:column headerText="Código do Endereço">
+				<h:outputText value="#{endereco.id}" />
+			</p:column>
+			<p:column headerText="Logradouro">
+				<h:outputText value="#{endereco.logradouro}" />
+			</p:column>
+			<p:column headerText="Número">
+				<h:outputText value="#{endereco.numero}" />
+			</p:column>
+			<p:column headerText="Bairro">
+				<h:outputText value="#{endereco.bairro}" />
+			</p:column>
+			<p:column headerText="Tipo de Endereço">
+				<h:outputText value="#{endereco.tipoEndereco}" />
+			</p:column>
+			<p:column headerText="UF">
+				<h:outputText value="#{endereco.estado}" />
+			</p:column>
+			<p:column headerText="Cidade">
+				<h:outputText value="#{endereco.cidade}" />
+			</p:column>
+			<p:column headerText="Complemento">
+				<h:outputText value="#{endereco.complemento}" />
+			</p:column>
+		</p:dataTable>
+    </h:form>
+	</p:dialog>
+
+	<p:dialog header="Visualizar Contatos" widgetVar="detalheConsContato" position="center" showEffect="explode" width="600">
+	<h:form id="formConsContatos">
+ 		<p:dataTable var="contato" value="#{clienteBean.clienteSel.listaContatos}" emptyMessage="Sem registros para serem visualizados"
+			paginator="true" rows="5" id="table" rowKey="#{contato.id}">
+			<p:column headerText="Código do Contato">
+				<h:outputText value="#{contato.id}" />
+			</p:column>
+			<p:column headerText="Descrição da Contato">
+				<h:outputText value="#{contato.email}" />
+			</p:column>
+			<p:column headerText="Tipo de Contato">
+				<h:outputText value="#{contato.tipoContato}" />
+			</p:column>
+		</p:dataTable>
+    </h:form>
+	</p:dialog>
+
+	<p:dialog header="Visualizar Usuário" widgetVar="detalheConsUsuario" position="center" showEffect="explode">
+	<h:form id="formConsUsuario">
+ 		<p:panelGrid columns="2" style="border:0px;">
+			<p:outputLabel value="Nome do usuário" />
+			<h:outputText value="#{clienteBean.clienteSel.usuario.userName}"/>
+				
+			<p:outputLabel value="Email do usuário" />
+			<h:outputText value="#{clienteBean.clienteSel.usuario.email}" />
+		</p:panelGrid>
+    </h:form>
+	</p:dialog>
+	
+	
+</ui:define>
+</ui:composition>

@@ -1,0 +1,306 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="layout.xhtml">
+    
+<ui:define name="content">
+    <p:messages id="mesCarrinho" showDetail="true" autoUpdate="true" closable="true" for="mesCarrinho"/>    
+    <p:panel id="horizontal" header="Autenticação de Usuário"
+			toggleable="true" toggleOrientation="horizontal">
+			<table style="width: 200px; height: 200px; margin: 0 auto;">
+				<tr>
+					<td width="50%"><h:form id="formUsuario">
+							<p:panel header="Login de Usuário">
+							<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" for="messages"/> 
+								<p:panelGrid columns="3" cellspacing="4">
+									<p:outputLabel value="Nome" />
+									<p:inputText id="username" size="45"
+										value="#{usuarioBean.usuario.userName}" required="true"
+										requiredMessage="Nome para acesso é requerido">
+									</p:inputText>
+									<p:message for="username" styleClass="error" />
+
+									<p:outputLabel value="Senha" />
+									<p:password id="descSenha"
+										value="#{usuarioBean.usuario.password}" required="true"
+										requiredMessage="Entre com a senha para o Login">
+									</p:password>
+									<p:message for="descSenha" styleClass="error" />
+								</p:panelGrid>
+								<center>
+									<p:commandButton value="Login" action="#{usuarioBean.logarUser()}"   ajax="true" update="formUsuario" />
+									<p:commandButton value="Primeiro Acesso" oncomplete="PF('detalhePessoa').show();" immediate="true" update=":cadCliente"/>
+								</center>
+							</p:panel>
+						</h:form></td>
+				</tr>
+			</table>
+		</p:panel>
+
+ 	<h:form id="formListaProduto">
+		<p:panel header="Meu Carrinho de compras">
+			<p:dataTable var="itemProduto" value="#{auxProdutoBean.listProdutoCarrinho}" emptyMessage="Sem registros para serem demonstrados"
+				paginator="true" rows="5" id="table" rowKey="#{itemProduto.produto.id}">
+				<p:column headerText="Código Interno">
+					<h:outputText value="#{itemProduto.produto.codigo}" />
+				</p:column>
+				<p:column headerText="Código de Barras">
+					<h:outputText value="#{itemProduto.produto.codBarras}" />
+				</p:column>
+				<p:column headerText="Descrição Produto">
+					<h:outputText value="#{itemProduto.produto.descricao}" />
+				</p:column>
+				<p:column headerText="Unidade">
+					<h:outputText value="#{itemProduto.produto.unidade}" />
+				</p:column>
+				<p:column headerText="Descrição da Marca">
+					<h:outputText value="#{itemProduto.produto.marca.descricao}" />
+				</p:column>
+				<p:column headerText="Complemento da Marca">
+					<h:outputText value="#{itemProduto.produto.marca.complemento}" />
+				</p:column>
+				<p:column headerText="Categoria">
+					<h:outputText value="#{itemProduto.produto.categoria.descricao}" />
+				</p:column>
+				<p:column headerText="Complemento da Categoria">
+					<h:outputText value="#{itemProduto.produto.categoria.complemento}" />
+				</p:column>
+				<p:column headerText="Valor de Venda">
+					<h:outputText value="#{itemProduto.vlrItem}" />
+				</p:column>
+				<p:column headerText="Quantidade">
+					<h:outputText value="#{itemProduto.quantidade}" />
+				</p:column>
+				<p:column headerText="Valor de Desconto">
+					<h:outputText value="#{itemProduto.vlrdesc}" />
+				</p:column>
+				<p:column headerText="Excluir" style="width:8%">
+				<center>
+					<p:commandButton value="Excluir" oncomplete="PF('detalheDialog').show();" process="@form" update="formRemover">
+						<f:setPropertyActionListener value="#{itemProduto}" target="#{auxProdutoBean.itemSel}" />
+					</p:commandButton>
+				</center>
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+
+	<p:dialog header="Exclusão do Item" widgetVar="detalheDialog" position="center" showEffect="explode">
+	<h:form id="formRemover">
+		<p:panel header="Confirma a remoção?">
+		<center>
+			<p:commandButton value="Sim" action="#{auxProdutoBean.removerProduto()}" ajax="true" update="formListaProduto" oncomplete="PF('detalheDialog').hide()" />
+			<p:commandButton value="Não" ajax="true" update="formListaProduto" oncomplete="PF('detalheDialog').hide()" />
+		</center>
+		</p:panel>    
+      </h:form>
+	</p:dialog>
+
+	<p:dialog header="Primeiro Acesso" widgetVar="detalhePessoa" position="center" showEffect="explode">
+	<h:form id="cadCliente">
+	<p:messages id="mesCliente" showDetail="true" autoUpdate="true" closable="true" for="mesCliente" />
+	<p:tabView>
+        <p:tab title="Dados Pessoais">
+			<p:panelGrid columns="3" style="border:0px;">
+				<p:outputLabel value="Nome" />
+				<p:inputText id="descricao" size="50"
+					value="#{auxProdutoBean.cliente.nome}" required="true"
+					requiredMessage="Nome do Cliente é um campo requerido"
+					validatorMessage="Nome do Cliente deve conter pelo menos 5 caracteres">
+					<f:validateLength minimum="5" />
+				</p:inputText>
+				<p:message for="descricao" styleClass="error" />
+				
+				<p:outputLabel value="Tipo :"/>
+				<p:selectOneRadio id="tipo" value="#{auxProdutoBean.cliente.tipoPessoa}">
+            		<f:selectItem itemLabel="Pessoa Fisica" itemValue="0" />
+            		<f:selectItem itemLabel="Pessoa Juridica" itemValue="1" />
+		        </p:selectOneRadio>
+				<p:message for="tipo" styleClass="error" />
+
+				<p:outputLabel value="Data de Nascimento" />
+				<p:calendar id="dtNascimento" value="#{auxProdutoBean.cliente.dtNascimento}"  showOn="button"
+				  validatorMessage="Data de nascimento no formato errado dd/MM/yyyy" pattern="dd/MM/yyyy"/>
+				<p:message for="dtNascimento" styleClass="error" />
+				
+				<p:outputLabel value="CPF" />
+				<p:inputText id="cpf" size="25"
+					value="#{auxProdutoBean.cliente.cpf}" required="true"
+					requiredMessage="CPF do Cliente é um campo requerido"
+					validatorMessage="CPF do Cliente deve conter 11 caracteres">
+					<f:validateLength minimum="11" />
+				</p:inputText>
+				<p:message for="cpf" styleClass="error" />
+			
+				<p:outputLabel value="Identidade" />
+				<p:inputText id="rg" size="30"
+					value="#{auxProdutoBean.cliente.identidade}" required="true"
+					requiredMessage="Identidade do Cliente é um campo requerido">
+				</p:inputText>
+				<p:message for="rg" styleClass="error" />
+			
+				<p:outputLabel value="Titulo de Eleitor" />
+				<p:inputText id="titulo" value="#{auxProdutoBean.cliente.titEleitor}" required="true" size="30"
+					requiredMessage="Nº do Título de Eleitor é um campo requerido">
+				</p:inputText>
+				<p:message for="titulo" styleClass="error" />
+				
+				<p:outputLabel value="Carteira de Habilitação" />
+				<p:inputText id="cnh" value="#{auxProdutoBean.cliente.cnh}" required="true" size="30"
+					requiredMessage="Carteira de Habilitação é um campo requerido">
+				</p:inputText>
+				<p:message for="cnh" styleClass="error" />
+  		    </p:panelGrid>
+        </p:tab>
+        <p:tab title="Endereço">
+			<p:panelGrid columns="3" style="border:0px;">
+			
+				<p:outputLabel value="Logradouro/Rua" />
+				<p:inputText id="logradouro" size="40"
+					value="#{auxProdutoBean.endereco.logradouro}" required="true"
+					requiredMessage="Logradouro/Rua é um campo requerido"
+					validatorMessage="Logradouro/Rua deve conter pelo menos 5 caracteres">
+					<f:validateLength minimum="5" />
+				</p:inputText>
+				<p:message for="logradouro" styleClass="error" />
+					
+				<p:outputLabel value="Número" />
+				<p:inputText id="nro" size="10"
+					value="#{auxProdutoBean.endereco.numero}" required="true"
+					requiredMessage="Número referente ao endereço é um campo requerido"
+					validatorMessage="Número referente ao endereço deve conter pelo menos 2 caracteres">
+					<f:validateLength minimum="2" />
+				</p:inputText>
+				<p:message for="nro" styleClass="error" />
+	
+				<p:outputLabel value="Bairro" />
+				<p:inputText id="bairro" size="35"
+					value="#{auxProdutoBean.endereco.bairro}" required="true"
+					requiredMessage="Bairro é um campo requerido"
+					validatorMessage="Bairro deve conter pelo menos 5 caracteres">
+					<f:validateLength minimum="5" />
+				</p:inputText>
+				<p:message for="bairro" styleClass="error" />
+	
+				<p:outputLabel value="Tipo de Endereço:"/>
+				<p:selectOneMenu id="tpEndereco" value="#{auxProdutoBean.endereco.tipoEndereco}" required="true" 
+					converter="tipoEnderecoConverter" requiredMessage="Deve-se selecionar o tipo de Endereço"
+					validatorMessage="Tipo de Endereço inválido">
+						<f:selectItem itemLabel="Selecionar" itemValue="" />
+						<f:selectItems value="#{enumeratorsBeanUtil.listTiposEnderecos}" var="tipos" 
+							itemLabel="#{tipos.description}" itemValue="#{tipos.value}" />
+				</p:selectOneMenu>
+				<p:message for="tpEndereco" styleClass="error" />
+				
+	
+				<p:outputLabel value="Estado" />
+				<p:inputText id="uf" size="10"
+					value="#{auxProdutoBean.endereco.estado}" required="true"
+					requiredMessage="Estado é um campo requerido"
+					validatorMessage="Sigla do Estado deve conter 2 caracteres">
+					<f:validateLength minimum="2" />
+				</p:inputText>
+				<p:message for="uf" styleClass="error" />
+	
+				<p:outputLabel value="Cidade" />
+				<p:inputText id="cidade" size="35"
+					value="#{auxProdutoBean.endereco.cidade}" required="true"
+					requiredMessage="Cidade é um campo requerido"
+					validatorMessage="Cidade deve conter pelo 5 caracteres">
+					<f:validateLength minimum="5" />
+				</p:inputText>
+				<p:message for="cidade" styleClass="error" />
+	
+				<p:outputLabel value="Complemento" />
+				<p:inputText id="complemento" size="30"
+					value="#{auxProdutoBean.endereco.complemento}">
+				</p:inputText>
+				<p:message for="complemento" styleClass="error" />
+			</p:panelGrid>
+        </p:tab>
+        <p:tab title="Telefone">
+	 		<p:panelGrid columns="3" style="border:0px;">
+				<p:outputLabel value="Nº do Telefone" />
+				<p:inputText id="numero" size="15"
+					value="#{auxProdutoBean.telefone.numeroTelefone}" required="true"
+					requiredMessage="Número do Telefone é um campo requerido"
+					validatorMessage="Número do Telefone deve conter pelo menos 8 caracteres">
+					<f:validateLength minimum="8" />
+				</p:inputText>
+				<p:message for="numero" styleClass="error" />
+					
+				<p:outputLabel value="Tipo de Telefone:"/>
+				<p:selectOneMenu id="tpTelefone" value="#{auxProdutoBean.telefone.tipoTelefone}" required="true" 
+					converter="tipoTelefoneConverter" requiredMessage="Deve-se selecionar o tipo de Telefone"
+					validatorMessage="Tipo de Telefone inválido">
+						<f:selectItem itemLabel="Selecionar" itemValue="" />
+						<f:selectItems value="#{enumeratorsBeanUtil.listTiposTelefones}" var="tipos" 
+							itemLabel="#{tipos.description}" itemValue="#{tipos.value}" />
+				</p:selectOneMenu>
+				<p:message for="tpTelefone" styleClass="error" />
+			</p:panelGrid>
+        </p:tab>
+        <p:tab title="Contato">
+	 		<p:panelGrid columns="3" style="border:0px;">			
+				<p:outputLabel value="Tipo de Contato:"/>
+				<p:selectOneMenu id="tipoContatoSel" value="#{auxProdutoBean.contato.tipoContato}" required="true" 
+					converter="tipoContatoConverter" requiredMessage="Deve-se selecionar o tipo de Contato"
+					validatorMessage="Tipo de Contato inválido">
+						<f:selectItem itemLabel="Selecionar" itemValue="" />
+						<f:selectItems value="#{enumeratorsBeanUtil.listTiposContatos}" var="tipo" 
+							itemLabel="#{tipo.description}" itemValue="#{tipo.value}" />
+				</p:selectOneMenu>
+				<p:message for="tipoContatoSel" styleClass="error" />
+	
+				<p:outputLabel value="Descrição do contato" />
+				<p:inputText id="descContato" size="35"
+					value="#{auxProdutoBean.contato.email}" required="true"
+					equiredMessage="Descrição do contato é um campo requerido">
+				</p:inputText>
+				<p:message for="descContato" styleClass="error" />				
+			</p:panelGrid>
+        </p:tab>
+        <p:tab title="Usuário">
+			<p:panelGrid columns="3" style="border:0px;">
+				<p:outputLabel value="Nome do usuário" />
+				<p:inputText id="username" size="35"
+					value="#{auxProdutoBean.usuarioPag.userName}" required="true"
+					requiredMessage="Nome para acesso é requerido"
+					validatorMessage="Nome para acesso deve conter pelo menos 8 caracteres">
+					<f:validateLength minimum="8" />
+				</p:inputText>
+				<p:message for="username" styleClass="error" />
+					
+				<p:outputLabel value="Email do usuário" />
+				<p:inputText id="email" size="35"
+					value="#{auxProdutoBean.usuarioPag.email}" required="true"
+					requiredMessage="Email para uma eventual recuperação da senha é requerido"
+					validatorMessage="Email deve conter pelo menos 8 caracteres">
+					<f:validateLength minimum="8" />
+				</p:inputText>
+				<p:message for="email" styleClass="error" />
+					
+				<p:outputLabel value="Sua senha" />
+				<p:password id="descSenha" value="#{auxProdutoBean.usuarioPag.password}" feedback="true"
+	                   promptLabel="Intensidade da senha" weakLabel="Senha fraca"
+	                   goodLabel="Senha muito boa" strongLabel="Senha forte" required="true"
+	                   validatorMessage="Senha está muito curta">
+					<f:validateLength minimum="8" />
+				</p:password>
+				<p:message for="descSenha" styleClass="error" />
+			</p:panelGrid>
+		    <center>
+		    	<p:commandButton value="Salvar" action="#{auxProdutoBean.salvarCliente()}" icon="ui-icon-document-b" ajax="true" 
+		    	  update=":formUsuario,cadCliente"/>
+		    </center> 
+        </p:tab>
+    </p:tabView>
+    </h:form>
+	</p:dialog>
+
+</ui:define>
+
+</ui:composition>

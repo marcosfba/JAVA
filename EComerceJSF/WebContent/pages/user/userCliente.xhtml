@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="layout.xhtml">
+
+<ui:define name="content">
+	<h:form id="formCliente">
+		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+		<p:panel header="Meu Cadastro">
+			<p:panelGrid columns="3" style="border:0px;">
+				<p:outputLabel value="Nome" />
+				<p:inputText id="descricao" size="50"
+					value="#{auxListBean.cliente.nome}" required="true"
+					requiredMessage="Nome do Cliente é um campo requerido"
+					validatorMessage="Nome do Cliente deve conter pelo menos 5 caracteres">
+					<f:validateLength minimum="5" />
+				</p:inputText>
+				<p:message for="descricao" styleClass="error" />
+				
+				<p:outputLabel value="Tipo :"/>
+				<p:selectOneRadio id="tipo" value="#{auxListBean.cliente.tipoPessoa}">
+            		<f:selectItem itemLabel="Pessoa Fisica" itemValue="0" />
+            		<f:selectItem itemLabel="Pessoa Juridica" itemValue="1" />
+		        </p:selectOneRadio>
+				<p:message for="tipo" styleClass="error" />
+
+				<p:outputLabel value="Data de Nascimento" />
+				<p:calendar id="dtNascimento" value="#{auxListBean.cliente.dtNascimento}"  showOn="button"
+				  validatorMessage="Data de nascimento no formato errado dd/MM/yyyy" pattern="dd/MM/yyyy"/>
+				<p:message for="dtNascimento" styleClass="error" />
+				
+				<p:outputLabel value="CPF" />
+				<p:inputText id="cpf" size="25"
+					value="#{auxListBean.cliente.cpf}" required="true"
+					requiredMessage="CPF do Cliente é um campo requerido"
+					validatorMessage="CPF do Cliente deve conter 11 caracteres">
+					<f:validateLength minimum="11" />
+				</p:inputText>
+				<p:message for="cpf" styleClass="error" />
+			
+				<p:outputLabel value="Identidade" />
+				<p:inputText id="rg" size="30"
+					value="#{auxListBean.cliente.identidade}" required="true"
+					requiredMessage="Identidade do Cliente é um campo requerido">
+				</p:inputText>
+				<p:message for="rg" styleClass="error" />
+			
+				<p:outputLabel value="Titulo de Eleitor" />
+				<p:inputText id="titulo" value="#{auxListBean.cliente.titEleitor}" required="true" size="30"
+					requiredMessage="Nº do Título de Eleitor é um campo requerido">
+				</p:inputText>
+				<p:message for="titulo" styleClass="error" />
+				
+				<p:outputLabel value="Carteira de Habilitação" />
+				<p:inputText id="cnh" value="#{auxListBean.cliente.cnh}" required="true" size="30"
+					requiredMessage="Carteira de Habilitação é um campo requerido">
+				</p:inputText>
+				<p:message for="cnh" styleClass="error" />
+
+				<p:outputLabel value="Observação" />
+				<p:inputTextarea id="observacao" value="#{auxListBean.cliente.observacao}" rows="10" cols="50" />
+				<p:message for="observacao" styleClass="error" />
+  		    </p:panelGrid>
+			
+			<p:commandButton value="Alterar" action="#{clienteBean.alterar(usuarioBean.usuarioSite.id)}"
+				ajax="true" update="formCliente" />
+		</p:panel>
+	</h:form>
+
+</ui:define>
+</ui:composition>

@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="layout.xhtml">
+
+<ui:define name="content">
+	<h:form id="formContato">
+		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+		<p:panel header="Cadastro / Edição da Contato">
+			<p:panelGrid columns="3" style="border:0px;">
+
+				<p:outputLabel value="Tipo de Contato:"/>
+				<p:selectOneMenu id="tipoContatoSel" value="#{contatoBean.contato.tipoContato}" required="true" 
+					converter="tipoContatoConverter" requiredMessage="Deve-se selecionar o tipo de Contato"
+					validatorMessage="Tipo de Contato inválido">
+						<f:selectItem itemLabel="Selecionar" itemValue="" />
+						<f:selectItems value="#{enumeratorsBeanUtil.listTiposContatos}" var="tipo" 
+							itemLabel="#{tipo.description}" itemValue="#{tipo.value}" />
+				</p:selectOneMenu>
+				<p:message for="tipoContatoSel" styleClass="error" />
+	
+				<p:outputLabel value="Descrição do contato" />
+				<p:inputText id="descContato" size="45"
+					value="#{contatoBean.contato.email}" required="true"
+					equiredMessage="Descrição do contato é um campo requerido">
+				</p:inputText>
+				<p:message for="descContato" styleClass="error" />				
+			</p:panelGrid>
+			
+			<p:commandButton value="Incluir" action="#{contatoBean.salvar(usuarioBean.usuarioSite.id)}"
+				ajax="true" update="formContato,formListaContato" />
+			<p:commandButton value="Alterar" action="#{contatoBean.alterar(usuarioBean.usuarioSite.id)}"
+				ajax="true" update="formContato,formListaContato" />
+			<p:commandButton value="Limpar" action="#{contatoBean.limpar()}" 
+			   immediate="true" process="@this" update="formContato" />
+		</p:panel>
+	</h:form>
+
+	<h:form id="formListaContato">
+		<p:panel header="Meus contatos">
+			<p:dataTable var="contato" value="#{auxListBean.contatos}" emptyMessage="Sem registros para serem demonstrados"
+				paginator="true" rows="5" id="table" selection="#{contatoBean.contatoSel}" rowKey="#{contato.id}">
+				<p:column headerText="Código do Contato">
+					<h:outputText value="#{contato.id}" />
+				</p:column>
+				<p:column headerText="Pessoa">
+					<h:outputText value="#{contato.pessoa.nome}" />
+				</p:column>
+				<p:column headerText="Descrição da Contato">
+					<h:outputText value="#{contato.email}" />
+				</p:column>
+				<p:column headerText="Tipo de Contato">
+					<h:outputText value="#{contato.tipoContato}" />
+				</p:column>
+				<p:column headerText="Editar" style="width:8%">
+				  <center><p:commandButton action="#{contatoBean.editar()}" icon="ui-icon-document-b" ajax="true" 
+						process="@form" update="formContato">
+						<f:setPropertyActionListener value="#{contato}" target="#{contatoBean.contatoSel}" />
+					</p:commandButton>
+				  </center> 
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+	
+</ui:define>
+</ui:composition>

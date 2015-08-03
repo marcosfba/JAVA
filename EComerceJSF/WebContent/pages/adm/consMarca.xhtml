@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="layout.xhtml">
+
+<ui:define name="content">
+	<h:form id="formMarca">
+		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+		<p:panel header="Consulta da Marca">
+			<p:panelGrid columns="3" cellspacing="4" style="border:0px;">
+				<p:outputLabel value="Codigo da Marca" />
+				<p:inputText id="userId" value="#{marcaBean.marca.id}"/>
+				<p:message for="userId" styleClass="error" />
+
+				<p:outputLabel value="Descrição da Marca" />
+				<p:inputText id="descricao" size="35" value="#{marcaBean.marca.descricao}"/>
+				<p:message for="descricao" styleClass="error" />
+				
+			</p:panelGrid>
+			
+			<p:commandButton value="Novo" action="#{marcaBean.limpar()}" ajax="true" update="formMarca,formListaMarca" />
+			<p:commandButton value="Buscar" action="#{marcaBean.buscar()}" ajax="true" update="formListaMarca" />
+		</p:panel>
+	</h:form>
+
+	<h:form id="formListaMarca">
+		<p:panel header="Listagem das Marcas">
+			<p:dataTable var="marca" value="#{marcaBean.listaMarca}" paginator="true" rows="5" id="table"
+				selection="#{marcaBean.marcaSel}" rowKey="#{marca.id}" emptyMessage="Sem registros para serem demonstrados">
+				<p:column headerText="Código da Marca">
+					<h:outputText value="#{marca.id}" />
+				</p:column>
+				<p:column headerText="Descrição da Marca">
+					<h:outputText value="#{marca.descricao}" />
+				</p:column>
+				<p:column headerText="Complemento da Marca">
+					<h:outputText value="#{marca.complemento}" />
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+	
+</ui:define>
+</ui:composition>

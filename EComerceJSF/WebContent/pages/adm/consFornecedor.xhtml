@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="layout.xhtml">
+
+<ui:define name="content">
+	<h:form id="formFornecedor">
+		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+		<p:panel header="Consulta de Fornecedor">
+			<p:panelGrid columns="3" style="border:0px;">
+				<p:outputLabel value="Codigo" />
+				<p:inputText id="userId" value="#{fornecedorBean.fornecedor.id}" />
+				<p:message for="userId" styleClass="error" />
+				
+				<p:outputLabel value="Nome" />
+				<p:inputText id="descricao" value="#{fornecedorBean.fornecedor.nome}" size="40"/>
+				<p:message for="descricao" styleClass="error" />
+				
+				<p:outputLabel value="Tipo :"/>
+				<p:selectOneMenu id="tipoPessoa" value="#{fornecedorBean.fornecedor.tipoPessoa}"> 
+						<f:selectItem itemLabel="Selecionar" itemValue="" />
+             			<f:selectItem itemLabel="Pessoa Fisica" itemValue="0" />
+            			<f:selectItem itemLabel="Pessoa Juridica" itemValue="1" />
+				</p:selectOneMenu>
+				<p:message for="tipoPessoa" styleClass="error" />
+
+				<p:outputLabel value="CNPJ" />
+				<p:inputText id="cnpj" value="#{fornecedorBean.fornecedor.cnpj}" 
+					validatorMessage="CNPJ do Fornecedor deve conter 14 caracteres">
+					<f:validateLength minimum="14" />
+				</p:inputText>
+				<p:message for="cnpj" styleClass="error" />
+			
+  		    </p:panelGrid>
+			
+			<p:commandButton value="Novo" action="#{fornecedorBean.limpar()}" ajax="true" update="formFornecedor,formListaFornecedor" />
+			<p:commandButton value="Buscar" action="#{fornecedorBean.buscar()}" ajax="true" update="formListaFornecedor" />
+		</p:panel>
+	</h:form>
+
+	<h:form id="formListaFornecedor">
+		<p:panel header="Listagem dos fornecedores">
+			<p:dataTable var="fornecedor" value="#{fornecedorBean.listaFornecedores}" emptyMessage="Sem registros para serem demonstrados"
+				paginator="true" rows="5" id="table" selection="#{fornecedorBean.fornecedorSel}" rowKey="#{fornecedor.id}">
+				<p:column headerText="Código do Fornecedor">
+					<h:outputText value="#{fornecedor.id}" />
+				</p:column>
+				<p:column headerText="Nome do Fornecedor">
+					<h:outputText value="#{fornecedor.nome}" />
+				</p:column>
+				<p:column headerText="CNPJ">
+					<h:outputText value="#{fornecedor.cnpj}" />
+				</p:column>
+				<p:column headerText="Inscrição Municipal">
+					<h:outputText value="#{fornecedor.inscMunicipal}" />
+				</p:column>
+				<p:column headerText="Inscrição Estadual">
+					<h:outputText value="#{fornecedor.insEstadual}" />
+				</p:column>
+				<p:column headerText="Telefones" style="width:10%">
+				<center>
+					<p:commandButton value="View" icon="ui-icon-document-b" oncomplete="PF('detalheTelefone').show();" process="@form" update=":formTelefone">
+						<f:setPropertyActionListener value="#{fornecedor}" target="#{fornecedorBean.fornecedorSel}" />
+					</p:commandButton>
+				</center>
+				</p:column>
+				<p:column headerText="Endereços" style="width:10%">
+				<center>
+					<p:commandButton value="View" icon="ui-icon-document-b" oncomplete="PF('detalheEndereco').show();" process="@form" update=":formEnderecos">
+						<f:setPropertyActionListener value="#{fornecedor}" target="#{fornecedorBean.fornecedorSel}" />
+					</p:commandButton>
+				</center>
+				</p:column>
+				<p:column headerText="Contatos" style="width:10%">
+				<center>
+					<p:commandButton value="View" icon="ui-icon-document-b" oncomplete="PF('detalheContato').show();" process="@form" update=":formContatos">
+						<f:setPropertyActionListener value="#{fornecedor}" target="#{fornecedorBean.fornecedorSel}" />
+					</p:commandButton>
+				</center>
+				</p:column>
+				<p:column headerText="Usuario" style="width:10%">
+				<center>
+					<p:commandButton value="View" icon="ui-icon-document-b" oncomplete="PF('detalheUsuario').show();" process="@form" update=":formUsuario">
+						<f:setPropertyActionListener value="#{fornecedor}" target="#{fornecedorBean.fornecedorSel}" />
+					</p:commandButton>
+				</center>
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+	
+	<p:dialog header="Visualizar Telefones" widgetVar="detalheTelefone" position="center" showEffect="explode">
+	<h:form id="formTelefone">
+		<p:dataTable var="telefone" value="#{fornecedorBean.fornecedorSel.listaTelefones}" emptyMessage="Sem registros para serem apresentados"
+			paginator="true" rows="5" id="table" rowKey="#{telefone.id}">
+			<p:column headerText="Código do Telefone">
+				<h:outputText value="#{telefone.id}" />
+			</p:column>
+			<p:column headerText="Nº do Telefone">
+				<h:outputText value="#{telefone.numeroTelefone}" />
+			</p:column>
+			<p:column headerText="Descrição Tipo Telefone">
+				<h:outputText value="#{telefone.tipoTelefone}" />
+			</p:column>
+		</p:dataTable>
+    </h:form>
+	</p:dialog>
+	
+	<p:dialog header="Visualizar Endereços" widgetVar="detalheEndereco" position="center" showEffect="explode">
+	<h:form id="formEnderecos">
+		<p:dataTable var="endereco" value="#{fornecedorBean.fornecedorSel.listaEnderecos}" emptyMessage="Sem registros para serem apresentados"
+			paginator="true" rows="5" id="table" rowKey="#{endereco.id}">
+			<p:column headerText="Código do Endereço">
+				<h:outputText value="#{endereco.id}" />
+			</p:column>
+			<p:column headerText="Logradouro/Endereço">
+				<h:outputText value="#{endereco.logradouro}" />
+			</p:column>
+			<p:column headerText="Número">
+				<h:outputText value="#{endereco.numero}" />
+			</p:column>
+			<p:column headerText="Bairro">
+				<h:outputText value="#{endereco.bairro}" />
+			</p:column>
+			<p:column headerText="Tipo de Endereço">
+				<h:outputText value="#{endereco.tipoEndereco}" />
+			</p:column>
+			<p:column headerText="UF">
+				<h:outputText value="#{endereco.estado}" />
+			</p:column>
+			<p:column headerText="Cidade">
+				<h:outputText value="#{endereco.cidade}" />
+			</p:column>
+			<p:column headerText="Complemento">
+				<h:outputText value="#{endereco.complemento}" />
+			</p:column>
+		</p:dataTable>
+    </h:form>
+	</p:dialog>
+
+	<p:dialog header="Visualizar Contatos" widgetVar="detalheContato" position="center" showEffect="explode">
+	<h:form id="formContatos">
+		<p:dataTable var="contato" value="#{fornecedorBean.fornecedorSel.listaContatos}" emptyMessage="Sem registros para serem apresentados"
+			paginator="true" rows="5" id="table" rowKey="#{contato.id}">
+			<p:column headerText="Código do Contato">
+				<h:outputText value="#{contato.id}" />
+			</p:column>
+			<p:column headerText="Descrição da Contato">
+				<h:outputText value="#{contato.email}" />
+			</p:column>
+			<p:column headerText="Tipo de Contato">
+				<h:outputText value="#{contato.tipoContato}" />
+			</p:column>
+		</p:dataTable>
+    </h:form>
+	</p:dialog>
+
+	<p:dialog header="Visualizar Usuário" widgetVar="detalheUsuario" position="center" showEffect="explode">
+	<h:form id="formUsuario">
+ 		<p:panelGrid columns="2" style="border:0px;">
+			<p:outputLabel value="Nome do usuário" />
+			<h:outputText value="#{fornecedorBean.fornecedorSel.usuario.userName}"/>
+				
+			<p:outputLabel value="Email do usuário" />
+			<h:outputText value="#{fornecedorBean.fornecedorSel.usuario.email}" />
+		</p:panelGrid>
+    </h:form>
+	</p:dialog>
+	
+</ui:define>
+</ui:composition>

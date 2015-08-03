@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="layout.xhtml">
+    
+<ui:define name="content">
+    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
+	<h:form id="formListaProduto">
+		<p:panel header="Meu Carrinho de compras">
+			<p:dataTable var="itemProduto" value="#{auxProdutoBean.listProdutoCarrinho}" emptyMessage="Sem registros para serem demonstrados"
+				paginator="true" rows="5" id="table" rowKey="#{itemProduto.produto.id}">
+				<p:column headerText="Código Interno">
+					<h:outputText value="#{itemProduto.produto.codigo}" />
+				</p:column>
+				<p:column headerText="Código de Barras">
+					<h:outputText value="#{itemProduto.produto.codBarras}" />
+				</p:column>
+				<p:column headerText="Descrição Produto">
+					<h:outputText value="#{itemProduto.produto.descricao}" />
+				</p:column>
+				<p:column headerText="Unidade">
+					<h:outputText value="#{itemProduto.produto.unidade}" />
+				</p:column>
+				<p:column headerText="Descrição da Marca">
+					<h:outputText value="#{itemProduto.produto.marca.descricao}" />
+				</p:column>
+				<p:column headerText="Complemento da Marca">
+					<h:outputText value="#{itemProduto.produto.marca.complemento}" />
+				</p:column>
+				<p:column headerText="Categoria">
+					<h:outputText value="#{itemProduto.produto.categoria.descricao}" />
+				</p:column>
+				<p:column headerText="Complemento da Categoria">
+					<h:outputText value="#{itemProduto.produto.categoria.complemento}" />
+				</p:column>
+				<p:column headerText="Valor de Venda">
+					<h:outputText value="#{itemProduto.vlrItem}" />
+				</p:column>
+				<p:column headerText="Quantidade">
+					<h:outputText value="#{itemProduto.quantidade}" />
+				</p:column>
+				<p:column headerText="Valor de Desconto">
+					<h:outputText value="#{itemProduto.vlrdesc}" />
+				</p:column>
+				<p:column headerText="Excluir" style="width:8%">
+				<center>
+					<p:commandButton value="Excluir" oncomplete="PF('detalheDialog').show();" process="@form" update="formRemover">
+						<f:setPropertyActionListener value="#{itemProduto}" target="#{auxProdutoBean.itemSel}" />
+					</p:commandButton>
+				</center>
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+	
+	<p:dialog header="Exclusão do Item" widgetVar="detalheDialog" position="center" showEffect="explode">
+	<h:form id="formRemover">
+		<p:panel header="Confirma a remoção?">
+		<center>
+			<p:commandButton value="Sim" action="#{auxProdutoBean.removerProduto()}" ajax="true" update="formListaProduto" oncomplete="PF('detalheDialog').hide()" />
+			<p:commandButton value="Não" ajax="true" update="formListaProduto" oncomplete="PF('detalheDialog').hide()" />
+		</center>
+		</p:panel>    
+      </h:form>
+	</p:dialog>
+	
+</ui:define>
+
+</ui:composition>

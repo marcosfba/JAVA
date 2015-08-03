@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Administrador do Web Site</title>
+	<style>
+		.ui-layout-container {
+			width: 1366px;
+			height: 768px;
+			border: none !important;
+		}
+		.ui-widget, .ui-widget .ui-widget {    
+ 		   font-size: 90% !important;
+		} 
+		</style>
+</h:head>
+<h:body>
+	<p:layout style="min-width:1366px;min-height:768px;margin:0 auto;border:0px;height:100%;">
+		<p:layoutUnit position="north" style="border:0px;bottom:0;">
+			<img src="../images/bannerAdm.png" width="100%"/>
+			<p:panel header="Seja muito bem vindo: #{usuarioBean.usuarioSite.email}" collapsed="false" style="text-align:right;border:0px;"/>			
+		</p:layoutUnit>
+		<p:layoutUnit position="west" header="Menu de Opções" style="text-align:center;border:0px;">
+			<h:form id="menuOpcoes">	
+			<p:menu toggleable="true">
+				<p:submenu label="Cadastros">
+					<p:menuitem value="Categoria" action="#{menuBean.admCategoria()}" icon="ui-icon-disk" />
+					<p:menuitem value="Marca" action="#{menuBean.admMarca()}"         icon="ui-icon-disk" />
+					<p:menuitem value="Usuário" action="#{menuBean.admUsuario()}"     icon="ui-icon-disk" />
+					<p:menuitem value="Telefone" action="#{menuBean.admTelefone()}"   icon="ui-icon-disk" />
+					<p:menuitem value="Endereço" action="#{menuBean.admEndereco()}"   icon="ui-icon-disk" />
+					<p:menuitem value="Contato" action="#{menuBean.admTipoContato()}"  icon="ui-icon-disk" />
+					<p:menuitem value="Pessoa" action="#{menuBean.admPessoa()}"         icon="ui-icon-disk" />
+					<p:menuitem value="Cliente" action="#{menuBean.admCliente()}"       icon="ui-icon-disk" />
+					<p:menuitem value="Fornecedor" action="#{menuBean.admFornecedor()}" icon="ui-icon-disk" />
+					<p:menuitem value="Produto" action="#{menuBean.admProduto()}" icon="ui-icon-disk" />
+					<p:menuitem value="Operação" action="#{menuBean.admPedido()}"   icon="ui-icon-disk" />
+				</p:submenu>
+				<p:separator />
+				<p:submenu label="Consultas">
+					<p:menuitem value="Categoria" action="#{menuBean.admConsCategoria()}"  icon="ui-icon-disk" />
+					<p:menuitem value="Marca" action="#{menuBean.admConsMarca()}"  icon="ui-icon-disk" />
+					<p:menuitem value="Telefone" action="#{menuBean.admConsTelefone()}"  icon="ui-icon-disk" />
+					<p:menuitem value="Usuário" action="#{menuBean.admConsUsuario()}"  icon="ui-icon-disk" />
+					<p:menuitem value="Endereço" action="#{menuBean.admConsEndereco()}"   icon="ui-icon-disk" />
+					<p:menuitem value="Contato" action="#{menuBean.admConsContato()}"  icon="ui-icon-disk" />
+					<p:menuitem value="Pessoa" action="#{menuBean.admConsPessoa()}"  icon="ui-icon-disk" />
+					<p:menuitem value="Cliente" action="#{menuBean.admConsCliente()}"  icon="ui-icon-disk" />
+					<p:menuitem value="Fornecedor" action="#{menuBean.admConsFornecedor()}"  icon="ui-icon-disk" />
+					<p:menuitem value="Produto" action="#{menuBean.admConsProduto()}"  icon="ui-icon-disk" />
+					<p:menuitem value="Operação" action="#{menuBean.admConsPedido()}"  icon="ui-icon-disk" />
+				</p:submenu>
+				<p:separator />
+				<p:submenu label="Relatórios">
+					<p:menuitem value="Usuário" action="#{menuBean.admRelUsuario()}"  icon="ui-icon-disk" />
+					<p:menuitem value="Cliente" action="#{menuBean.admRelCliente()}"  icon="ui-icon-disk" />
+					<p:menuitem value="Fornecedor" action="#{menuBean.admRelFornecedor()}"  icon="ui-icon-disk" />
+					<p:menuitem value="Operação" action="#{menuBean.admRelPedido()}"  icon="ui-icon-disk" />
+					<p:menuitem value="Produtos" action="#{menuBean.admRelProdutos()}"  icon="ui-icon-disk" />
+				</p:submenu>
+				<p:submenu label="Graficos">
+					<p:menuitem value="Cliente" action="#{menuBean.admGrafClientes()}"  icon="ui-icon-disk" />
+					<p:menuitem value="Produtos" action="#{menuBean.admGrafProdutos()}"  icon="ui-icon-disk" />
+					<p:menuitem value="Operações" action="#{menuBean.admGrafOperacoes()}"  icon="ui-icon-disk" />
+				</p:submenu>
+				<p:submenu label="Log-Off">
+					<p:menuitem value="Sair do Sistema" action="#{usuarioBean.logOff()}" icon="ui-icon-disk" />
+				</p:submenu>
+			</p:menu>
+			</h:form>
+		</p:layoutUnit>
+		<p:layoutUnit position="center" style="border:0px;">
+			<ui:insert name="content"></ui:insert>
+		</p:layoutUnit>
+	</p:layout>
+</h:body>
+</html>

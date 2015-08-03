@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="layout.xhtml">
+
+<ui:define name="content">
+	<h:form id="formProduto">
+		<p:messages id="mesProdutos" showDetail="true" autoUpdate="true" closable="true" for="mesProdutos" />
+		<p:panel header="Cadastro / Edição do Produto">
+			<p:panelGrid columns="3" style="border:0px;">
+				<p:outputLabel value="Codigo do Produto" />
+				<p:inputText id="userId" value="#{produtoBean.produto.id}"
+					readonly="true" />
+				<br />
+
+				<p:outputLabel value="Código Externo Produto" />
+				<p:inputText id="codigo" size ="15"
+					value="#{produtoBean.produto.codigo}" required="true"
+					requiredMessage="Código interno do produto é um campo requerido"
+					validatorMessage="Código interno deve conter pelo menos 5 caracteres">
+					<f:validateLength minimum="5" />
+				</p:inputText>
+				<p:message for="codigo" styleClass="error" />
+				
+				<p:outputLabel value="Código Barras" />
+				<p:inputText id="codBarras" size="20"
+					value="#{produtoBean.produto.codBarras}" required="true"
+					requiredMessage="Código de barras do produto é um campo requerido"
+					validatorMessage="Código de barras deve conter pelo menos 14 caracteres">
+					<f:validateLength minimum="14" />
+				</p:inputText>
+				<p:message for="codBarras" styleClass="error" />
+
+				<p:outputLabel value="Descrição do Produto" />
+				<p:inputText id="descricao" size="45"
+					value="#{produtoBean.produto.descricao}" required="true"
+					requiredMessage="Descrição do produto é um campo requerido"
+					validatorMessage="Descrição do produto deve conter pelo menos 5 caracteres">
+					<f:validateLength minimum="5" />
+				</p:inputText>
+				<p:message for="descricao" styleClass="error" />
+
+				<p:outputLabel value="Unidade do Produto" />
+				<p:inputText id="unidade" size="15"
+					value="#{produtoBean.produto.unidade}" required="true"
+					requiredMessage="Unidade do produto é um campo requerido"
+					validatorMessage="Unidade do produto deve conter pelo menos 6 caracteres">
+					<f:validateLength minimum="2" maximum="6"/>
+				</p:inputText>
+				<p:message for="unidade" styleClass="error" />
+
+				<p:outputLabel value="Complemento" />
+				<p:inputText id="complemento" value="#{produtoBean.produto.complemento}" />
+				<p:message for="complemento" styleClass="error" />				
+
+				<p:outputLabel value="Selecione a categoria:" />
+				<p:selectOneMenu id="categoria"
+					value="#{produtoBean.produto.categoria}" required="true"
+					requiredMessage="A categoria não pode deixar de ser selecionada">
+					<f:selectItem itemLabel="Selecionar" itemValue="" />
+					<f:selectItems value="#{produtoBean.listaCategorias}" var="mark"
+						itemLabel="#{mark.descricao}" />
+				</p:selectOneMenu>
+				<p:message for="categoria" styleClass="error" />
+
+				<p:outputLabel value="Selecione a marca:" />
+				<p:selectOneMenu id="marca"
+					value="#{produtoBean.produto.marca}" required="true"
+					requiredMessage="A marca não pode deixar de ser selecionada">
+					<f:selectItem itemLabel="Selecionar" itemValue="" />
+					<f:selectItems value="#{produtoBean.listaMarcas}" var="mark"
+						itemLabel="#{mark.descricao}" />
+				</p:selectOneMenu>
+				<p:message for="marca" styleClass="error" />
+				
+				<p:outputLabel value="Valor de Custo" />
+				<p:inputText id="vlrCusto" 
+					value="#{produtoBean.produto.vlrCusto}" required="true"
+					requiredMessage="Valor de Custo do produto é um campo requerido"/>
+				<p:message for="vlrCusto" styleClass="error" />
+				
+				<p:outputLabel value="Valor de Venda" />
+				<p:inputText id="vlrVenda" 
+					value="#{produtoBean.produto.vlrVenda}" required="true"
+					requiredMessage="Valor de Venda do produto é um campo requerido"/>
+				<p:message for="vlrVenda" styleClass="error" />
+
+				<p:outputLabel value="Descrição do Fabricante" />
+				<p:inputTextarea id="observacao" value="#{produtoBean.produto.docFabricante}" rows="20" cols="50" />
+				<p:message for="observacao" styleClass="error" />
+				
+				<p:outputLabel value="Fotos do Produto" />
+				<p:commandButton value="Adicionar Foto" oncomplete="PF('detalheFoto').show();" immediate="true" ajax="true" update="formFoto">
+					<f:setPropertyActionListener value="#{produtoBean.foto}" target="#{produtoBean.foto}" />
+				</p:commandButton>
+				<br />
+			</p:panelGrid>
+			
+			<p:commandButton value="Incluir" action="#{produtoBean.salvar()}"
+				ajax="true" update="formProduto,formListaProduto" />
+			<p:commandButton value="Alterar" action="#{produtoBean.alterar()}"
+				ajax="true" update="formProduto,formListaProduto" />
+			<p:commandButton value="Limpar" action="#{produtoBean.limpar()}" 
+			   immediate="true" process="@this" update="formProduto" />
+		</p:panel>
+	</h:form>
+
+	<h:form id="formListaProduto">
+		<p:panel header="Listagem dos Produtos">
+			<p:dataTable var="produto" value="#{produtoBean.listaProduto}" emptyMessage="Sem registros para serem demonstrados"
+				paginator="true" rows="5" id="table" selection="#{produtoBean.produtoSel}" rowKey="#{produto.id}">
+				<p:column headerText="Código Interno">
+					<h:outputText value="#{produto.codigo}" />
+				</p:column>
+				<p:column headerText="Código de Barras">
+					<h:outputText value="#{produto.codBarras}" />
+				</p:column>
+				<p:column headerText="Descrição Produto">
+					<h:outputText value="#{produto.descricao}" />
+				</p:column>
+				<p:column headerText="Unidade">
+					<h:outputText value="#{produto.unidade}" />
+				</p:column>
+				<p:column headerText="Marca">
+					<h:outputText value="#{produto.marca.descricao}" />
+				</p:column>
+				<p:column headerText="Categoria">
+					<h:outputText value="#{produto.categoria.descricao}" />
+				</p:column>
+				<p:column headerText="Valor de Custo">
+					<h:outputText value="#{produto.vlrCusto}" />
+				</p:column>
+				<p:column headerText="Valor de Venda">
+					<h:outputText value="#{produto.vlrVenda}" />
+				</p:column>
+				<p:column headerText="Editar" style="width:5%">
+				  <center><p:commandButton action="#{produtoBean.editar()}" icon="ui-icon-document-b" ajax="true" process="@form" update="formProduto">
+						<f:setPropertyActionListener value="#{produto}" target="#{produtoBean.produtoSel}" />
+					</p:commandButton>
+				  </center> 
+				</p:column>
+				<p:column headerText="Excluir" style="width:8%">
+					<center><p:commandButton value="Excluir" oncomplete="PF('detalheDialog').show();" process="@form" update="formRemover">
+						<f:setPropertyActionListener value="#{produto}" target="#{produtoBean.produtoSel}" />
+					</p:commandButton>
+					</center>
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+	
+	<p:dialog header="Inclusão de Fotos" widgetVar="detalheFoto" position="center" showEffect="explode" width="300" height="200">
+	<h:form id="formFoto" enctype="multipart/form-data">
+	<p:messages id="mesFotos" showDetail="true" autoUpdate="true" closable="true" for="mesFotos" />
+		<p:panelGrid columns="3" style="border:0px;">
+			<p:fileUpload fileUploadListener="#{produtoBean.doUpload}" showButtons="false" label="Procurar..." auto="true" />
+		</p:panelGrid>
+    </h:form>		
+	</p:dialog>
+
+	
+	<p:dialog header="Excluir Produto" widgetVar="detalheDialog" position="center" showEffect="explode">
+	<h:form id="formRemover">
+		<p:panel header="Confirma a remoção?">
+		<center>
+			<p:commandButton value="Sim" action="#{produtoBean.excluir()}" ajax="true" update="formProduto,formListaProduto" oncomplete="PF('detalheDialog').hide()" />
+			<p:commandButton value="Não" action="#{produtoBean.limpar()}" ajax="true" update="formProduto,formListaProduto" oncomplete="PF('detalheDialog').hide()" />
+		</center>
+		</p:panel>    
+      </h:form>
+	</p:dialog>
+	
+</ui:define>
+</ui:composition>

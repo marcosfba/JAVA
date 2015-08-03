@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="layout.xhtml">
+
+<ui:define name="content">
+	<h:form id="formMarca">
+		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+		<p:panel header="Cadastro / Edição da Marca">
+			<p:panelGrid columns="3" cellspacing="4" style="border:0px;">
+				<p:outputLabel value="Codigo da Marca" />
+				<p:inputText id="userId" value="#{marcaBean.marca.id}"
+					readonly="true" />
+				<br />
+
+				<p:outputLabel value="Descrição da Marca" />
+				<p:inputText id="descricao" size="35"
+					value="#{marcaBean.marca.descricao}" required="true"
+					requiredMessage="Descrição da Marca é um campo requerido">
+				</p:inputText>
+				<p:message for="descricao" styleClass="error" />
+				
+				<p:outputLabel value="Complemento" />
+				<p:inputText id="complemento" size="35"
+					value="#{marcaBean.marca.complemento}" required="true"
+					requiredMessage="Complemento da Marca é um campo requerido"
+					validatorMessage="Complemento da Marca deve conter pelo menos 5 caracteres">
+					<f:validateLength minimum="5" />
+				</p:inputText>
+				<p:message for="complemento" styleClass="error" />				
+			</p:panelGrid>
+			
+			<p:commandButton value="Incluir" action="#{marcaBean.salvar()}"
+				ajax="true" update="formMarca, formListaMarca" />
+			<p:commandButton value="Alterar" action="#{marcaBean.alterar()}"
+				ajax="true" update="formMarca, formListaMarca" />
+			<p:commandButton value="Limpar" action="#{marcaBean.limpar()}"
+				immediate="true" process="@this" update="formMarca" />
+		</p:panel>
+	</h:form>
+
+	<h:form id="formListaMarca">
+		<p:panel header="Listagem das Marcas">
+			<p:dataTable var="marca" value="#{marcaBean.listaMarca}" paginator="true" rows="5" id="table"
+				selection="#{marcaBean.marcaSel}" rowKey="#{marca.id}" emptyMessage="Sem registros para serem demonstrados">
+				<p:column headerText="Código da Marca">
+					<h:outputText value="#{marca.id}" />
+				</p:column>
+				<p:column headerText="Descrição da Marca">
+					<h:outputText value="#{marca.descricao}" />
+				</p:column>
+				<p:column headerText="Complemento da Marca">
+					<h:outputText value="#{marca.complemento}" />
+				</p:column>
+				<p:column headerText="Editar" style="width:8%">
+				  <center><p:commandButton action="#{marcaBean.editar()}" icon="ui-icon-document-b" ajax="true" 
+						process="@form" update="formMarca">
+						<f:setPropertyActionListener value="#{marca}" target="#{marcaBean.marcaSel}" />
+					</p:commandButton>
+				  </center> 
+				</p:column>
+				<p:column headerText="Excluir" style="width:8%">
+					<center><p:commandButton value="Excluir" oncomplete="PF('detalheDialog').show();" process="@form" update="formRemover">
+						<f:setPropertyActionListener value="#{marca}" target="#{marcaBean.marcaSel}" />
+					</p:commandButton>
+					</center>
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+	
+	<p:dialog header="Excluir Marca" widgetVar="detalheDialog" position="center" showEffect="explode">
+	<h:form id="formRemover">
+		<p:panel header="Confirma a remoção?">
+		<center>
+			<p:commandButton value="Sim" action="#{marcaBean.excluir()}" ajax="true" update="formMarca,formListaMarca" oncomplete="PF('detalheDialog').hide()" />
+			<p:commandButton value="Não" action="#{marcaBean.limpar()}" ajax="true" update="formMarca,formListaMarca" oncomplete="PF('detalheDialog').hide()" />
+		</center>
+		</p:panel>    
+      </h:form>
+	</p:dialog>
+	
+</ui:define>
+</ui:composition>

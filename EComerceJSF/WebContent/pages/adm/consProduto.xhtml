@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="layout.xhtml">
+
+<ui:define name="content">
+	<h:form id="formProduto">
+		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
+		<p:panel header="Consulta de Produtos">
+			<p:panelGrid columns="3" style="border:0px;">
+				<p:outputLabel value="Codigo do Produto" />
+				<p:inputText id="userId" value="#{produtoBean.produto.id}"/>
+				<p:message for="userId" styleClass="error" />
+
+				<p:outputLabel value="Código Barras" />
+				<p:inputText id="codBarras" size="20"
+					value="#{produtoBean.produto.codBarras}" 
+					validatorMessage="Código de barras deve conter pelo menos 14 caracteres">
+					<f:validateLength minimum="14" />
+				</p:inputText>
+				<p:message for="codBarras" styleClass="error" />
+
+				<p:outputLabel value="Descrição do Produto" />
+				<p:inputText id="descricao" size="45"
+					value="#{produtoBean.produto.descricao}" 
+					validatorMessage="Descrição do produto deve conter pelo menos 5 caracteres">
+					<f:validateLength minimum="5" />
+				</p:inputText>
+				<p:message for="descricao" styleClass="error" />
+
+				<p:outputLabel value="Selecione a categoria:" />
+				<p:selectOneMenu id="categoria"
+					value="#{produtoBean.produto.categoria}">
+					<f:selectItem itemLabel="Selecionar" itemValue="" />
+					<f:selectItems value="#{produtoBean.listaCategorias}" var="mark"
+						itemLabel="#{mark.descricao}" />
+				</p:selectOneMenu>
+				<p:message for="categoria" styleClass="error" />
+
+				<p:outputLabel value="Selecione a marca:" />
+				<p:selectOneMenu id="marca"
+					value="#{produtoBean.produto.marca}">
+					<f:selectItem itemLabel="Selecionar" itemValue="" />
+					<f:selectItems value="#{produtoBean.listaMarcas}" var="mark"
+						itemLabel="#{mark.descricao}" />
+				</p:selectOneMenu>
+				<p:message for="marca" styleClass="error" />
+			</p:panelGrid>
+			
+			<p:commandButton value="Novo" action="#{produtoBean.limpar()}" ajax="true" update="formProduto,formListaProduto" />
+			<p:commandButton value="Buscar" action="#{produtoBean.buscar()}" ajax="true" update="formProduto,formListaProduto" />
+		</p:panel>
+	</h:form>
+
+	<h:form id="formListaProduto">
+		<p:panel header="Listagem dos Produtos">
+			<p:dataTable var="produto" value="#{produtoBean.listaProduto}" emptyMessage="Sem registros para serem demonstrados"
+				paginator="true" rows="5" id="table" selection="#{produtoBean.produtoSel}" rowKey="#{produto.id}">
+				<p:column headerText="Código Interno">
+					<h:outputText value="#{produto.codigo}" />
+				</p:column>
+				<p:column headerText="Código de Barras">
+					<h:outputText value="#{produto.codBarras}" />
+				</p:column>
+				<p:column headerText="Descrição Produto">
+					<h:outputText value="#{produto.descricao}" />
+				</p:column>
+				<p:column headerText="Unidade">
+					<h:outputText value="#{produto.unidade}" />
+				</p:column>
+				<p:column headerText="Marca">
+					<h:outputText value="#{produto.marca.descricao}" />
+				</p:column>
+				<p:column headerText="Categoria">
+					<h:outputText value="#{produto.categoria.descricao}" />
+				</p:column>
+				<p:column headerText="Valor de Custo">
+					<h:outputText value="#{produto.vlrCusto}" />
+				</p:column>
+				<p:column headerText="Valor de Venda">
+					<h:outputText value="#{produto.vlrVenda}" />
+				</p:column>
+				<p:column headerText="Fotos" style="width:10%">
+				<center>
+					<p:commandButton value="View" icon="ui-icon-document-b" oncomplete="PF('detalheFotos').show();" process="@form" update=":formFotos">
+						<f:setPropertyActionListener value="#{produto}" target="#{produtoBean.produtoSel}" />
+					</p:commandButton>
+				</center>
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+	
+	<p:dialog header="Visualizar Fotos do Produto" widgetVar="detalheFotos" position="center" showEffect="explode" width="600">
+	<h:form id="formFotos">
+		<p:dataTable var="foto" value="#{produtoBean.produtoSel.listaFotos}" emptyMessage="Sem registros para serem apresentados"
+			paginator="true" rows="5" id="table" rowKey="#{foto.id}">
+			<p:column headerText="Código da Foto">
+				<h:outputText value="#{foto.id}" />
+			</p:column>
+			<p:column headerText="Nome Imagem Original">
+				<h:outputText value="#{foto.fotoOriginal}" />
+			</p:column>
+			<p:column headerText="Nome Imagem Tumb">
+				<h:outputText value="#{foto.fotoTumb}" />
+			</p:column>
+			<p:column headerText="Tipo Foto">
+				<h:outputText value="#{foto.tipoFoto.descricao}" />
+			</p:column>
+			<p:column headerText="Extensão Foto">
+				<h:outputText value="#{foto.extensao}" />
+			</p:column>
+		</p:dataTable>
+    </h:form>
+	</p:dialog>
+
+	
+</ui:define>
+</ui:composition>
